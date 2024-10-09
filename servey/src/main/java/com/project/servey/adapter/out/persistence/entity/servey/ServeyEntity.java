@@ -13,15 +13,16 @@ import lombok.*;
 @Entity
 @Getter
 @Builder
-//@NoArgsConstructor 기본생성자
+@NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name="Servey")
 public class ServeyEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "servey_id") 
     private Long serveyId;          // PK
 
-    @Column(name = "user-id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private String userId;          // 작성자
 
     @Column(name = "title", nullable = false)
@@ -33,10 +34,10 @@ public class ServeyEntity extends BaseEntity{
     @Column(name = "category", nullable = false)
     private int category;       // 카테고리
 
-    @Column(name = "per-point", nullable = false)
+    @Column(name = "per_point", nullable = false)
     private int perPoint;       
 
-    @Column(name = "limit-submit", nullable = false)
+    @Column(name = "limit_submit", nullable = false)
     private int limitSubmit;      
 
     @Column(name = "startdate", nullable = false)

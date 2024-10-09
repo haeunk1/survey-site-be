@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import lombok.*;
 @Builder
 @Getter
-//@NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ServeyResponseDto {
     private Long serveyId;

@@ -6,7 +6,7 @@ import lombok.*;
 
 @Builder
 @Getter
-//@NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Servey {
     private Long serveyId;
