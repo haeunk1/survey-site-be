@@ -2,6 +2,7 @@ package com.project.servey.adapter.out.persistence.adapter;
 
 import com.project.servey.adapter.out.persistence.entity.servey.ServeyEntity;
 import com.project.servey.adapter.out.persistence.repository.ServeyRepository;
+import com.project.servey.application.port.out.servey.CreateServeyPort;
 import com.project.servey.application.port.out.servey.FindServeyPort;
 import com.project.servey.domain.Servey;
 import com.project.servey.exception.ErrorCode;
@@ -13,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
-public class ServeyPersistenceAdapter implements FindServeyPort{
+public class ServeyPersistenceAdapter implements CreateServeyPort, FindServeyPort{
     private final ServeyRepository serveyRepository;
     private final ServeyMapper serveyMapper;
     @Override
@@ -21,5 +22,12 @@ public class ServeyPersistenceAdapter implements FindServeyPort{
         ServeyEntity serveyEntity = serveyRepository.findById(id)
                     .orElseThrow(() -> new ServeyException(ErrorCode.SERVEY_NOT_FOUND));
         return serveyMapper.entityToDomain(serveyEntity);
+    }
+    @Override
+    public Servey createServey(Servey servey) {
+        ServeyEntity serveyEntity = serveyMapper.domainToEntity(servey);
+        ServeyEntity savedEntity = serveyRepository.save(serveyEntity);
+
+        return serveyMapper.entityToDomain(savedEntity);
     }
 }
