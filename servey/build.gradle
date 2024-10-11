@@ -35,6 +35,7 @@ dependencies {
 implementation 'org.springframework.boot:spring-boot-starter'
 runtimeOnly 'com.mysql:mysql-connector-j'
 testImplementation 'org.springframework.boot:spring-boot-starter-test'
+testImplementation 'org.assertj:assertj-core:3.24.2'
 
 	// mapstruct
     implementation 'org.mapstruct:mapstruct:1.6.0'

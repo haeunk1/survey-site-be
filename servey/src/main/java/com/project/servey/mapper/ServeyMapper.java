@@ -24,6 +24,8 @@ public interface ServeyMapper {
 
     Servey commandToDomain(CreateServeyCommand command);
 
+    CreateServeyCommand domainToConnCommand(Servey servey);
+
     List<Servey> entitiesToDomains(List<ServeyEntity> serveyEntities);
 
     List<ServeyResponseDto> domainsToResponseDtos(List<Servey> serveys);
