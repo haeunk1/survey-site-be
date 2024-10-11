@@ -1,5 +1,7 @@
 package com.project.servey.adapter.out.persistence.adapter;
 
+import java.util.List;
+
 import com.project.servey.adapter.out.persistence.entity.servey.ServeyEntity;
 import com.project.servey.adapter.out.persistence.repository.ServeyRepository;
 import com.project.servey.application.port.out.servey.CreateServeyPort;
@@ -22,6 +24,11 @@ public class ServeyPersistenceAdapter implements CreateServeyPort, FindServeyPor
         ServeyEntity serveyEntity = serveyRepository.findById(id)
                     .orElseThrow(() -> new ServeyException(ErrorCode.SERVEY_NOT_FOUND));
         return serveyMapper.entityToDomain(serveyEntity);
+    }
+    @Override
+    public List<Servey> findServeyList(){
+        List<ServeyEntity> list = serveyRepository.findAll();
+        return serveyMapper.entitiesToDomains(list);
     }
     @Override
     public Servey createServey(Servey servey) {

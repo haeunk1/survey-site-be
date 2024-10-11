@@ -1,5 +1,7 @@
 package com.project.servey.mapper;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -14,13 +16,17 @@ import com.project.servey.domain.Servey;
 )
 public interface ServeyMapper {
 
-    Servey entityToDomain(ServeyEntity postEntity);
+    Servey entityToDomain(ServeyEntity serveyEntity);
 
-    ServeyResponseDto domainToResponseDto(Servey post);
+    ServeyResponseDto domainToResponseDto(Servey servey);
 
-    ServeyEntity domainToEntity(Servey post);
+    ServeyEntity domainToEntity(Servey servey);
 
     Servey commandToDomain(CreateServeyCommand command);
+
+    List<Servey> entitiesToDomains(List<ServeyEntity> serveyEntities);
+
+    List<ServeyResponseDto> domainsToResponseDtos(List<Servey> serveys);
 
     //Servey commandToDomain(UpdateServeyCommand command);
 

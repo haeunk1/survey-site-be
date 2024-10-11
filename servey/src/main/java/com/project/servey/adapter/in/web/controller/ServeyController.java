@@ -1,5 +1,7 @@
 package com.project.servey.adapter.in.web.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,10 +33,18 @@ public class ServeyController {
         return ResponseEntity.ok(responseDto);
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<List<ServeyResponseDto>> findServeyList(){
+        List<ServeyResponseDto> list = findServeyUseCase.findServeyList();
+        return ResponseEntity.ok(list);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<ServeyResponseDto> createServey(@RequestBody ServeyResponseDto serveyResponseDto){
         CreateServeyCommand command = CreateServeyCommand.of(serveyResponseDto);
         ServeyResponseDto responseDto = createServeyUseCase.createServey(command);
         return ResponseEntity.ok(responseDto);
     }
+
+
 }

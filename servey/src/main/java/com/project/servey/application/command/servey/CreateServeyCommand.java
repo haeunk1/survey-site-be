@@ -24,6 +24,7 @@ public class CreateServeyCommand {
         return CreateServeyCommand.builder()
                 .userId(serveyResponseDto.getUserId())
                 .title(serveyResponseDto.getTitle())
+                .type(serveyResponseDto.getType())
                 .category(serveyResponseDto.getCategory())
                 .perPoint(serveyResponseDto.getPerPoint())
                 .limitSubmit(serveyResponseDto.getLimitSubmit())

@@ -1,5 +1,7 @@
 package com.project.servey.application.service.servey;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.servey.adapter.in.web.dto.response.servey.ServeyResponseDto;
@@ -24,5 +26,10 @@ public class FindServeyService implements FindServeyUseCase {
         Servey findServey = findServeyPort.findServeyById(findCommand.getServeyId());
         return serveyMapper.domainToResponseDto(findServey);
     }
-    
+
+    @Override
+    public List<ServeyResponseDto> findServeyList() {
+        List<Servey> list = findServeyPort.findServeyList();
+        return serveyMapper.domainsToResponseDtos(list);
+    }
 }
