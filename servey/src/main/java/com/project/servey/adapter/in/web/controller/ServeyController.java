@@ -17,8 +17,10 @@ import com.project.servey.adapter.in.web.dto.response.servey.ServeyResponseDto;
 import com.project.servey.application.command.servey.CreateServeyCommand;
 import com.project.servey.application.command.servey.FindServeyCommand;
 import com.project.servey.application.port.in.servey.CreateServeyUseCase;
+import com.project.servey.application.port.in.servey.DeleteServeyUseCase;
 import com.project.servey.application.port.in.servey.FindServeyUseCase;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -27,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class ServeyController {
     private final FindServeyUseCase findServeyUseCase;
     private final CreateServeyUseCase createServeyUseCase;
-    //private final DeleteServeyUseCase deleteServeyUseCase;
+    private final DeleteServeyUseCase deleteServeyUseCase;
     
     @GetMapping("/{serveyId}")
     public ResponseEntity<ServeyResponseDto> findServey(@PathVariable("serveyId") Long id){
@@ -48,28 +50,11 @@ public class ServeyController {
         ServeyResponseDto responseDto = createServeyUseCase.createServey(command);
         return ResponseEntity.ok(responseDto);
     }
-
-    // @DeleteMapping("/delete/servey")
-    // public ResponseEntity<ServeyResponseDto> deleteServey(@RequestParam(name="serveyId") Long id) {
-
-    //     // commentUseCase.softDeleteComment(commentConverter.deleteRequestDtoToDomain(requestDto));
-    //     // return ResponseEntity.ok(
-    //     //         ResponseDto.success()
-    //     // );
-    // }
-
-    /**
-     * 댓글 수정
-     */
-    // @PostMapping("/update/comment")
-    // public ResponseEntity<ResponseDto<Void>> updateComment(@Valid @RequestBody CommentUpdateRequestDto requestDto) {
-    //     commentUseCase.updateComment(commentConverter.updateRequestDtoToDomain(requestDto));
-    //     return ResponseEntity.ok(
-    //             ResponseDto.success()
-    //     );
-    // }
-
     
-
-
+    @Transactional
+    @DeleteMapping("/delete")
+    public ResponseEntity<Long> deleteServey(@RequestParam(name="serveyId") Long id) {
+        Long rtnId = deleteServeyUseCase.deleteServeyById(id);
+        return ResponseEntity.ok(rtnId);
+    }
 }
