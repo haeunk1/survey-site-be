@@ -46,6 +46,9 @@ public class ServeyEntity extends BaseEntity{
     @Column(name = "enddate", nullable = false)
     private LocalDateTime enddate;
 
+    @Column(name = "delete_yn", nullable = false)
+    private String deleteYn;
+
     //ID로 ServeyEntity 객체를 생성하는 정적 팩토리 메서드
     public static ServeyEntity of(Long serveyId){
         return ServeyEntity.builder()

@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.project.servey.adapter.out.persistence.entity.servey.ServeyEntity;
 import com.project.servey.adapter.out.persistence.repository.ServeyRepository;
+import com.project.servey.adapter.out.persistence.repository.dsl.ServeyDslRepository;
 import com.project.servey.application.port.out.servey.CreateServeyPort;
+import com.project.servey.application.port.out.servey.DeleteServeyPort;
 import com.project.servey.application.port.out.servey.FindServeyPort;
 import com.project.servey.domain.Servey;
 import com.project.servey.exception.ErrorCode;
@@ -16,9 +18,10 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @PersistenceAdapter
-public class ServeyPersistenceAdapter implements CreateServeyPort, FindServeyPort{
+public class ServeyPersistenceAdapter implements CreateServeyPort, FindServeyPort, DeleteServeyPort{
     private final ServeyRepository serveyRepository;
     private final ServeyMapper serveyMapper;
+    private final ServeyDslRepository dslRepository;
     @Override
     public Servey findServeyById(Long id) {
         ServeyEntity serveyEntity = serveyRepository.findById(id)
@@ -37,4 +40,9 @@ public class ServeyPersistenceAdapter implements CreateServeyPort, FindServeyPor
 
         return serveyMapper.entityToDomain(savedEntity);
     }
+    @Override
+    public Long deleteServey(Long serveyId) {
+        return dslRepository.deleteServey(serveyId);
+    }
+    
 }

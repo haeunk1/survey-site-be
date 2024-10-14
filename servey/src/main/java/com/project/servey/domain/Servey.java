@@ -20,4 +20,5 @@ public class Servey {
     private LocalDateTime enddate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String deleteYn;
 }

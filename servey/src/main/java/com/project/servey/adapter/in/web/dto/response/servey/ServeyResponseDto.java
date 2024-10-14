@@ -19,4 +19,5 @@ public class ServeyResponseDto {
     private LocalDateTime enddate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String deleteYn;
 }

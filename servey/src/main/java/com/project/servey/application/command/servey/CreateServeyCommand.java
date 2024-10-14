@@ -17,8 +17,8 @@ public class CreateServeyCommand {
     private int limitSubmit;
     private LocalDateTime startdate;
     private LocalDateTime enddate;
+    private String deleteYn;
     
-
     // factory method
     public static CreateServeyCommand of(ServeyResponseDto serveyResponseDto) {
         return CreateServeyCommand.builder()
@@ -30,6 +30,7 @@ public class CreateServeyCommand {
                 .limitSubmit(serveyResponseDto.getLimitSubmit())
                 .startdate(serveyResponseDto.getStartdate())
                 .enddate(serveyResponseDto.getEnddate())
+                .deleteYn(serveyResponseDto.getDeleteYn())
                 .build();
     }
 }
