@@ -8,6 +8,7 @@ import org.mapstruct.ReportingPolicy;
 import com.project.servey.adapter.in.web.dto.response.servey.ServeyResponseDto;
 import com.project.servey.adapter.out.persistence.entity.servey.ServeyEntity;
 import com.project.servey.application.command.servey.CreateServeyCommand;
+import com.project.servey.application.command.servey.UpdateServeyCommand;
 import com.project.servey.domain.Servey;
 //객체 간 매핑을 자동으로 처리
 @Mapper(
@@ -23,6 +24,8 @@ public interface ServeyMapper {
     ServeyEntity domainToEntity(Servey servey);
 
     Servey commandToDomain(CreateServeyCommand command);
+    
+    Servey commandToDomain(UpdateServeyCommand command);
 
     CreateServeyCommand domainToConnCommand(Servey servey);
 

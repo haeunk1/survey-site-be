@@ -25,5 +25,22 @@ public class ServeyDslRepository {
         .where(serveyEntity.serveyId.eq(serveyId))
         .execute();
     }
+
+    /*
+     * [Update] serveyId에 해당하는 설문조사 수정
+     */
+    public Long updateServey(Servey servey){
+        return queryFactory.update(serveyEntity)
+        .set(serveyEntity.title,servey.getTitle())
+        .set(serveyEntity.type,servey.getType())
+        .set(serveyEntity.category,servey.getCategory())
+        .set(serveyEntity.perPoint,servey.getPerPoint())
+        .set(serveyEntity.limitSubmit,servey.getLimitSubmit())
+        .set(serveyEntity.startdate,servey.getStartdate())
+        .set(serveyEntity.enddate,servey.getEnddate())
+        .set(serveyEntity.updatedAt,LocalDateTime.now())
+        .where(serveyEntity.serveyId.eq(servey.getServeyId()))
+        .execute();
+    }
    
 }
