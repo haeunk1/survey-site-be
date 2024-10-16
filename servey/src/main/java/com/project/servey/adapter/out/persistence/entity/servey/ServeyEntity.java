@@ -1,10 +1,6 @@
 package com.project.servey.adapter.out.persistence.entity.servey;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
-
-import org.springframework.data.annotation.LastModifiedDate;
-
 import com.project.servey.adapter.out.persistence.entity.BaseEntity;
 
 import jakarta.persistence.*;
