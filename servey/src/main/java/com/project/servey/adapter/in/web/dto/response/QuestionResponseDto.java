@@ -1,8 +1,11 @@
-package com.project.servey.adapter.in.web.dto.response.servey;
+package com.project.servey.adapter.in.web.dto.response;
 
 import java.time.LocalDateTime;
-
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Getter
@@ -14,4 +17,5 @@ public class QuestionResponseDto {
     private String question;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
 }

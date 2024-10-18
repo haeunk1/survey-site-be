@@ -1,4 +1,4 @@
-package com.project.servey.adapter.in.web.dto.response.servey.api;
+package com.project.servey.adapter.in.web.dto.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

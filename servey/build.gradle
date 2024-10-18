@@ -50,11 +50,11 @@ dependencies {
 	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
 
 	// Apache POI
-    implementation 'org.apache.poi:poi:4.1.2' // HSSF (Excel 97-2003) 형식의 엑셀 파일을 처리하기 위한 라이브러리.
-	implementation 'org.apache.poi:poi-ooxml:4.1.2' // XSSF (Excel 2007 이상) 형식의 엑셀 파일을 처리하기 위한 라이브러리.
-	implementation 'org.apache.poi:poi-ooxml-schemas:4.1.2' // 엑셀 수식 처리에 필요한 추가 라이브러리.
-	implementation 'org.apache.poi:poi-scratchpad:4.1.2' // 문서 암호화/복호화에 필요한 추가 라이브러리.
-	implementation 'org.slf4j:slf4j-api:1.7.36' // Apache POI에서 로그를 출력하는 데 필요한 라이브러리.
+    implementation 'org.apache.poi:poi:5.0.0' // HSSF (Excel 97-2003) 형식의 엑셀 파일을 처리하기 위한 라이브러리.
+	implementation 'org.apache.poi:poi-ooxml:5.0.0' // XSSF (Excel 2007 이상) 형식의 엑셀 파일을 처리하기 위한 라이브러리.
+	//implementation 'org.apache.poi:poi-ooxml-schemas:4.1.2' // 엑셀 수식 처리에 필요한 추가 라이브러리.
+	//implementation 'org.apache.poi:poi-scratchpad:4.1.2' // 문서 암호화/복호화에 필요한 추가 라이브러리.
+	//implementation 'org.slf4j:slf4j-api:1.7.36' // Apache POI에서 로그를 출력하는 데 필요한 라이브러리.
 }
 
 tasks.named('test') {
