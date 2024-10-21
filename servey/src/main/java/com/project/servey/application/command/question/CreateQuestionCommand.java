@@ -1,4 +1,4 @@
-package com.project.servey.application.command.servey.question;
+package com.project.servey.application.command.question;
 
 import org.springframework.web.multipart.MultipartFile;
 

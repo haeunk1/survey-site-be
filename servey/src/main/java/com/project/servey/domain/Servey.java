@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Servey {
     private Long serveyId;
-    private String userId;
+    private int userId;
     private String title;
     private ServeyType type;
     private int category;

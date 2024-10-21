@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.servey.adapter.in.web.dto.response.QuestionResponseDto;
-import com.project.servey.application.command.servey.question.CreateQuestionCommand;
+import com.project.servey.application.command.question.CreateQuestionCommand;
 import com.project.servey.application.port.in.question.CreateQuestionUseCase;
 import com.project.servey.application.port.out.question.CreateQuestionPort;
 import com.project.servey.domain.Question;
