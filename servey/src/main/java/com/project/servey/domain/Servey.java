@@ -2,6 +2,8 @@ package com.project.servey.domain;
 
 import java.time.LocalDateTime;
 
+import com.project.servey.adapter.out.persistence.entity.constant.ServeyType;
+
 import lombok.*;
 
 @Builder
@@ -12,7 +14,7 @@ public class Servey {
     private Long serveyId;
     private String userId;
     private String title;
-    private int type;
+    private ServeyType type;
     private int category;
     private int perPoint;
     private int limitSubmit;

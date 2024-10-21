@@ -2,6 +2,8 @@ package com.project.servey.adapter.in.web.dto.response.servey;
 
 import java.time.LocalDateTime;
 
+import com.project.servey.adapter.out.persistence.entity.constant.ServeyType;
+
 import lombok.*;
 @Builder
 @Getter
@@ -11,7 +13,7 @@ public class ServeyResponseDto {
     private Long serveyId;
     private String userId;
     private String title;
-    private int type;
+    private ServeyType type;
     private int category;
     private int perPoint;
     private int limitSubmit;

@@ -2,6 +2,7 @@ package com.project.servey.adapter.out.persistence.entity.servey;
 
 import java.time.LocalDateTime;
 import com.project.servey.adapter.out.persistence.entity.BaseEntity;
+import com.project.servey.adapter.out.persistence.entity.constant.ServeyType;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,8 +25,12 @@ public class ServeyEntity extends BaseEntity{
     @Column(name = "title", nullable = false)
     private String title;           // 제목
 
+    // @Column(name = "type", nullable = false)
+    // private int type;           // 설문조사유형
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    private int type;           // 설문조사유형
+    private ServeyType type;       // 설문조사유형
 
     @Column(name = "category", nullable = false)
     private int category;       // 카테고리
