@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @UseCase
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class CreateServeyService implements CreateServeyUseCase{
     private final CreateServeyPort createServeyPort;
     private final ServeyMapper serveyMapper;

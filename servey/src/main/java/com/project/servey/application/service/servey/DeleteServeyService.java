@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 @UseCase
 public class DeleteServeyService implements DeleteServeyUseCase{
 

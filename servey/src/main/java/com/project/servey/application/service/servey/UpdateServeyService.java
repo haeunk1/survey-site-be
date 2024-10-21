@@ -12,7 +12,7 @@ import com.project.servey.util.custom.UseCase;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 @UseCase
 public class UpdateServeyService implements UpdateServeyUseCase{
     

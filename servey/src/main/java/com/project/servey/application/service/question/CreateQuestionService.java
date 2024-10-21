@@ -5,18 +5,17 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.servey.adapter.in.web.dto.response.QuestionResponseDto;
-import com.project.servey.adapter.out.persistence.entity.servey.QuestionEntity;
 import com.project.servey.application.command.servey.question.CreateQuestionCommand;
 import com.project.servey.application.port.in.question.CreateQuestionUseCase;
 import com.project.servey.application.port.out.question.CreateQuestionPort;
 import com.project.servey.domain.Question;
+import com.project.servey.exception.ServeyException;
+import com.project.servey.exception.ErrorCode;
 import com.project.servey.mapper.QuestionMapper;
 import com.project.servey.util.custom.UseCase;
 
@@ -26,17 +25,24 @@ import org.apache.poi.ss.usermodel.*;
 
 @UseCase
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class CreateQuestionService implements CreateQuestionUseCase{
     private final CreateQuestionPort createQuestionPort;
     private final QuestionMapper mapper;
 
     @Override
+    @Transactional
     public List<QuestionResponseDto> createQuestion(CreateQuestionCommand command) {
         
         List<Question> list = getDataList(command);
-        List<Question> rtnList = createQuestionPort.createQuestion(list);
+        List<Question> rtnList;
+        try{
+            rtnList = createQuestionPort.createQuestion(list);
+        }catch(Exception e){
+            throw new ServeyException(ErrorCode.FILE_UPLOAD_ERROR, e);
+        }
         return mapper.domainToResponseDto(rtnList);
+        
 
     }
     

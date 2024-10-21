@@ -21,9 +21,8 @@ public class QuestionPersistenceAdapter implements CreateQuestionPort{
     public List<Question> createQuestion(List<Question> list) {
         //domain to entity
         List<QuestionEntity> entityList = mapper.domainsToEntities(list);
-        List<QuestionEntity> rtn = repository.saveAll(entityList);
-        //entity to domain
-        return mapper.entitiesToDomains(rtn);
+        List<QuestionEntity> rtnEntityList =repository.saveAll(entityList);
+        return mapper.entitiesToDomains(rtnEntityList);
     }
     
 }
