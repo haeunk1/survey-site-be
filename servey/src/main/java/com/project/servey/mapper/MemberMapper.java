@@ -5,6 +5,7 @@ import org.mapstruct.ReportingPolicy;
 
 import com.project.servey.adapter.in.web.dto.response.auth.MemberResponseDto;
 import com.project.servey.adapter.out.persistence.entity.member.MemberEntity;
+import com.project.servey.application.command.auth.SignInCommand;
 import com.project.servey.application.command.auth.SignUpCommand;
 import com.project.servey.domain.Member;
 
@@ -26,7 +27,7 @@ public interface MemberMapper {
     Member toDomain(MemberEntity memberEntity);
 
     // 로그인 요청 Command를 도메인으로 변환
-    //Member commandToDomain(SignInCommand signInCommand);
+    Member commandToDomain(SignInCommand signInCommand);
 
     // 회원가입 요청 Command를 도메인으로 변환
     Member commandToDomain(SignUpCommand signUpCommand);
