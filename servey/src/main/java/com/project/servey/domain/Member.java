@@ -15,7 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Member {
-    private Long userId;
+    private Long memberId;
     private String email;
     private String name;
     private String password;
@@ -24,7 +24,7 @@ public class Member {
     // factory method
     public static Member of(long id) {
         return Member.builder()
-                .userId(id)
+                .memberId(id)
                 .build();
     }
 
@@ -37,9 +37,9 @@ public class Member {
 
 
     // factory method
-    public static Member of(Long userId, String email, String name, String naLocalMetadataBuildingContext) {
+    public static Member of(Long memberId, String email, String name, String naLocalMetadataBuildingContext) {
         return Member.builder()
-                .userId(userId)
+                .memberId(memberId)
                 .email(email)
                 .name(name)
                 .build();

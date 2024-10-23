@@ -49,7 +49,7 @@ public class MemberPersistenceAdapter implements CreateMemberPort, FindMemberPor
         MemberEntity memberEntity = memberRepository.findMemberEntityByEmail(email)
                 .orElseThrow(() -> new ServeyException(ErrorCode.MEMBER_NOT_FOUND));
 
-        return Member.of(memberEntity.getUserId(), memberEntity.getEmail(), memberEntity.getName(), memberEntity.getPassword());
+        return Member.of(memberEntity.getMemberId(), memberEntity.getEmail(), memberEntity.getName(), memberEntity.getPassword());
     }
 
     

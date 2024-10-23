@@ -44,7 +44,7 @@ public class JwtTokenProvider {
      * @return 생성된 JWT Access 토큰
      * @apiNote JWT Access 토큰을 생성하는 메서드
      */
-    public String generateAccessToken(String email, String name, Long userId) {
+    public String generateAccessToken(String email, String name, Long memberId) {
         // 시간 정보 생성
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
@@ -53,7 +53,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .subject(email)
                 .claim("name", name)
-                .claim("userId", userId)
+                .claim("memberId", memberId)
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(secretKey)

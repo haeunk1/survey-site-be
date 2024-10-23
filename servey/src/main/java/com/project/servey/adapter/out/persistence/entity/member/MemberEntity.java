@@ -20,9 +20,9 @@ import lombok.*;
 @Table(name="Member")
 public class MemberEntity {
     @Id
-    @Column(name = "user_id") 
+    @Column(name = "member_id") 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;               // PK
+    private Long memberId;               // PK
 
     @Column(unique = true, nullable = false)
     private String email;          // 이메일

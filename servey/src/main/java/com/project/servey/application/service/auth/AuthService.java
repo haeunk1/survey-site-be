@@ -21,7 +21,6 @@ import com.project.servey.util.JwtTokenProvider;
 import com.project.servey.util.custom.UseCase;
 
 import lombok.RequiredArgsConstructor;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * 회원 인증 관련 비즈니스 로직을 처리하는 서비스 클래스
@@ -84,7 +83,7 @@ public class AuthService implements AuthUseCase{
 
         // 3. JWT access 토큰 생성
         String accessToken = jwtTokenProvider
-                .generateAccessToken(findMember.getEmail(), findMember.getName(), findMember.getUserId());
+                .generateAccessToken(findMember.getEmail(), findMember.getName(), findMember.getMemberId());
 
         // 4. JWT refresh 토큰을 생성하고 저장
         RefreshToken refreshToken = RefreshToken.of(findMember, refreshTokenDurationMinutes);

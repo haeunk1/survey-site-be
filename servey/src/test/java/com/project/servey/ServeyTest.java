@@ -56,7 +56,7 @@ public class ServeyTest {
         // Long serveyid = 1L;
 
         // Servey servey = Servey.builder()
-        //     .userId("test1")
+        //     .memberId("test1")
         //     .title("title1")
         //     .category(1)
         //     .limitSubmit(1)

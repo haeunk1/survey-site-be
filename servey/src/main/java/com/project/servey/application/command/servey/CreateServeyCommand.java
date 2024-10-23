@@ -10,7 +10,7 @@ import com.project.servey.adapter.out.persistence.entity.constant.ServeyType;
 @Builder
 @Getter
 public class CreateServeyCommand {
-    private int userId;
+    private int memberId;
     private String title;
     private ServeyType type;
     private int category;
@@ -23,7 +23,7 @@ public class CreateServeyCommand {
     // factory method
     public static CreateServeyCommand of(ServeyResponseDto serveyResponseDto) {
         return CreateServeyCommand.builder()
-                .userId(serveyResponseDto.getUserId())
+                .memberId(serveyResponseDto.getMemberId())
                 .title(serveyResponseDto.getTitle())
                 .type(serveyResponseDto.getType())
                 .category(serveyResponseDto.getCategory())

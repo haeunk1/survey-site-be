@@ -1,7 +1,16 @@
 package com.project.servey.adapter.out.persistence.adapter;
 
+import com.project.servey.adapter.out.persistence.entity.member.MemberEntity;
+import org.springframework.util.ObjectUtils;
+
+import com.project.servey.adapter.out.persistence.entity.member.RefreshTokenEntity;
+import com.project.servey.adapter.out.persistence.repository.RefreshTokenRepository;
 import com.project.servey.application.port.out.refreshToken.CreateRefreshTokenPort;
 import com.project.servey.domain.RefreshToken;
+import com.project.servey.exception.ErrorCode;
+import com.project.servey.exception.ServeyException;
+import com.project.servey.mapper.MemberMapper;
+import com.project.servey.mapper.RefreshTokenMapper;
 import com.project.servey.util.custom.PersistenceAdapter;
 
 import lombok.RequiredArgsConstructor;
@@ -13,10 +22,35 @@ import lombok.RequiredArgsConstructor;
 @PersistenceAdapter
 public class RefreshTokenPersistenceAdapter implements CreateRefreshTokenPort{
     
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final MemberMapper memberMapper;
+    private final RefreshTokenMapper refreshTokenMapper;
+
     @Override
     public RefreshToken createRefreshToken(RefreshToken refreshToken) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createRefreshToken'");
+        RefreshTokenEntity refreshTokenEntity = refreshTokenMapper.domainToEntity(refreshToken);
+        
+        validRefreshTokenEntity(refreshTokenEntity);
+
+        // RefreshToken 생성 및 저장
+        RefreshTokenEntity savedRefreshTokenEntity = refreshTokenRepository.save(refreshTokenEntity);
+        return refreshTokenMapper.entityToDomain(savedRefreshTokenEntity);
+    }
+    
+    /**
+     * @param refreshTokenEntity RefreshTokenEntity
+     * @apiNote RefreshTokenEntity 유효성 검사
+     */
+    private void validRefreshTokenEntity(RefreshTokenEntity refreshTokenEntity) {
+        if (ObjectUtils.isEmpty(refreshTokenEntity)) throw new ServeyException(ErrorCode.DATA_NOT_FOUND);
+    }
+
+    /**
+     * @param memberEntity MemberEntity
+     * @apiNote MemberEntity 유효성 검사
+     */
+    private void validMemberEntity(MemberEntity memberEntity) {
+        if (ObjectUtils.isEmpty(memberEntity)) throw new ServeyException(ErrorCode.DATA_NOT_FOUND);
     }
     
 }
