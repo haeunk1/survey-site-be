@@ -35,11 +35,11 @@ public class SecurityConfig{
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 상태 비저장 설정 (JWT 토큰 사용)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/servey/list").permitAll()
-                            // .requestMatchers("/member/auth/signUp").permitAll()
-                            // .requestMatchers("/member/auth/signIn").permitAll()
+                             .requestMatchers("/auth/signUp").permitAll()
+                             .requestMatchers("/auth/signIn").permitAll()
                             // .requestMatchers("/main").permitAll()
-                            // .requestMatchers("/member/login").permitAll()
-                            // .requestMatchers("/member/signUp").permitAll()
+                             .requestMatchers("/member/login").permitAll()
+                            
                             .anyRequest().authenticated();                         // 나머지 요청은 인증 필요
                 });
                 //.authenticationProvider(authenticationProvider())                  // DaoAuthenticationProvider를 인증 제공자로 설정 (커스텀 로그인 인증)

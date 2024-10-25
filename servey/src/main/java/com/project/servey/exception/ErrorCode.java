@@ -31,6 +31,14 @@ public enum ErrorCode {
     REFRESH_TOKEN_EXPIRATION_DATE_NOT_FOUND("REF002", "Refresh token expiration date not found"),
     REFRESH_TOKEN_EXPIRED("REF003", "Refresh token expired"),
     DATA_NOT_FOUND("DATA001", "Data not found"),
+
+     // security errors
+    UNAUTHORIZED("UNAUTHORIZED", "Unauthorized"),
+    AUTHENTICATION_ERROR("AUTHENTICATION_ERROR", "Authentication error"),
+    PRINCIPAL_CAST_ERROR("PRINCIPAL_CAST_ERROR", "Principal cast error"),
+    SECURITY_USER_NOT_FOUND("SEC001", "Security user not found"),
+    PASSWORD_IS_NOT_HANDLE_IN_SECURITY_USER_DETAILS("SEC002", "Password is not handle in security user details"),
+ 
     ;
 
     private final String code;

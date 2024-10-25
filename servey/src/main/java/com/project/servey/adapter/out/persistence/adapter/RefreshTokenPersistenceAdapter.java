@@ -6,6 +6,8 @@ import org.springframework.util.ObjectUtils;
 import com.project.servey.adapter.out.persistence.entity.member.RefreshTokenEntity;
 import com.project.servey.adapter.out.persistence.repository.RefreshTokenRepository;
 import com.project.servey.application.port.out.refreshToken.CreateRefreshTokenPort;
+import com.project.servey.application.port.out.refreshToken.DeleteRefreshTokenPort;
+import com.project.servey.domain.Member;
 import com.project.servey.domain.RefreshToken;
 import com.project.servey.exception.ErrorCode;
 import com.project.servey.exception.ServeyException;
@@ -20,7 +22,7 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 @PersistenceAdapter
-public class RefreshTokenPersistenceAdapter implements CreateRefreshTokenPort{
+public class RefreshTokenPersistenceAdapter implements CreateRefreshTokenPort, DeleteRefreshTokenPort{
     
     private final RefreshTokenRepository refreshTokenRepository;
     private final MemberMapper memberMapper;
@@ -51,6 +53,20 @@ public class RefreshTokenPersistenceAdapter implements CreateRefreshTokenPort{
      */
     private void validMemberEntity(MemberEntity memberEntity) {
         if (ObjectUtils.isEmpty(memberEntity)) throw new ServeyException(ErrorCode.DATA_NOT_FOUND);
+    }
+
+    /**
+     * @param member 회원
+     * @return 삭제 여부
+     * @apiNote RefreshToken 삭제
+     */
+    @Override
+    public Boolean deleteRefreshToken(Member member) {
+        MemberEntity memberEntity = memberMapper.toEntity(member);
+        validMemberEntity(memberEntity);
+        // 회원의 RefreshToken 삭제
+        refreshTokenRepository.deleteByMemberEntity(memberEntity);
+        return true;
     }
     
 }

@@ -1,20 +1,27 @@
 package com.project.servey.application.service.auth;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.servey.adapter.in.web.dto.response.auth.JwtResponseDto;
 import com.project.servey.adapter.in.web.dto.response.auth.MemberResponseDto;
 import com.project.servey.application.command.auth.SignInCommand;
+import com.project.servey.application.command.auth.SignOutCommand;
 import com.project.servey.application.command.auth.SignUpCommand;
 import com.project.servey.application.port.in.auth.AuthUseCase;
 import com.project.servey.application.port.out.member.CreateMemberPort;
 import com.project.servey.application.port.out.member.FindMemberPort;
 import com.project.servey.application.port.out.refreshToken.CreateRefreshTokenPort;
+import com.project.servey.application.port.out.refreshToken.DeleteRefreshTokenPort;
+import com.project.servey.config.security.user.UserDetailsImpl;
 import com.project.servey.domain.Jwt;
 import com.project.servey.domain.Member;
 import com.project.servey.domain.RefreshToken;
+import com.project.servey.exception.ErrorCode;
+import com.project.servey.exception.ServeyException;
 import com.project.servey.mapper.JwtMapper;
 import com.project.servey.mapper.MemberMapper;
 import com.project.servey.util.JwtTokenProvider;
@@ -33,6 +40,8 @@ import lombok.RequiredArgsConstructor;
 public class AuthService implements AuthUseCase{
 
     private final CreateMemberPort createMemberPort;
+    private final DeleteRefreshTokenPort deleteRefreshTokenPort;
+
     private final MemberMapper memberMapper;
     private final CreateRefreshTokenPort createRefreshTokenPort;
     private final FindMemberPort findMemberPort;
@@ -96,5 +105,44 @@ public class AuthService implements AuthUseCase{
         // 6. mapper를 통해 DTO로 변환하여 반환
         return jwtMapper.domainToResponseDTO(jwt);
     }
-    
+    /**
+     * @param signOutCommand 로그아웃 요청 도메인
+     * @apiNote 로그아웃 + JWT 삭제
+     */
+    @Transactional
+    @Override
+    public Long signOut(SignOutCommand signOutCommand) {
+        // 1. 로그아웃 요청 도메인을 생성
+        Member member = memberMapper.commandToDomain(signOutCommand);
+
+        // 2. SecurityContext에서 인증 정보를 가져와서 이메일을 추출
+        UserDetailsImpl userDetails = getUserDetails();
+
+        // 3. 회원 정보를 검증한 후 RefreshToken 삭제 (검증 실패시 도메인 비즈니스에서 예외 처리)
+        if (member.isSameEmail(userDetails.getEmail())) {
+            // 회원 조회 후 RefreshToken 삭제
+            Member findMember = findMemberPort.findMemberByEmail(member.getEmail());
+            deleteRefreshTokenPort.deleteRefreshToken(findMember);
+
+            // SecurityContext에서 인증 정보 삭제
+            SecurityContextHolder.clearContext();
+        }
+
+        // 4. 로그아웃한 회원 ID 반환
+        return member.getMemberId();
+    }
+
+    /**
+     * @return UserDetailsImpl 객체
+     * @apiNote SecurityContext에서 인증 정보를 가져와서 UserDetailsImpl 객체를 반환하는 메서드
+     */
+    private UserDetailsImpl getUserDetails() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            throw new ServeyException(ErrorCode.MEMBER_NOT_FOUND);
+        }
+
+        return (UserDetailsImpl) authentication.getPrincipal();
+    }
 }

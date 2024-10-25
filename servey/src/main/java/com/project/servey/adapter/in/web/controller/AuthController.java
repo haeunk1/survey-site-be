@@ -55,18 +55,18 @@ public class AuthController {
         return ResponseEntity.ok(ApiResponse.success(responseDTO));
     }
 
-    // /**
-    //  * @param signOutRequestDTO 로그아웃 요청 DTO
-    //  * @return 로그아웃 성공 메시지
-    //  * @apiNote 로그아웃 요청을 받아 JWT 토큰을 삭제합니다.
-    //  */
-    // @PostMapping("/signOut")
-    // public ResponseEntity<ApiResponse<Long>> signOutAndDeleteJwt(
-    //         @RequestBody SignOutRequestDto signOutRequestDTO
-    // ) {
-    //     SignOutCommand signOutCommand = SignOutCommand.of(signOutRequestDTO);
-    //     Long response = authUseCase.signOut(signOutCommand);
+    /**
+     * @param signOutRequestDTO 로그아웃 요청 DTO
+     * @return 로그아웃 성공 메시지
+     * @apiNote 로그아웃 요청을 받아 JWT 토큰을 삭제합니다.
+     */
+    @PostMapping("/signOut")
+    public ResponseEntity<ApiResponse<Long>> signOutAndDeleteJwt(
+            @RequestBody SignOutRequestDto signOutRequestDTO
+    ) {
+        SignOutCommand signOutCommand = SignOutCommand.of(signOutRequestDTO);
+        Long response = authUseCase.signOut(signOutCommand);
 
-    //     return ResponseEntity.ok(ApiResponse.success(response));
-    // }
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
 }

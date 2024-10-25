@@ -3,6 +3,7 @@ package com.project.servey.application.port.in.auth;
 import com.project.servey.adapter.in.web.dto.response.auth.JwtResponseDto;
 import com.project.servey.adapter.in.web.dto.response.auth.MemberResponseDto;
 import com.project.servey.application.command.auth.SignInCommand;
+import com.project.servey.application.command.auth.SignOutCommand;
 import com.project.servey.application.command.auth.SignUpCommand;
 
 /**
@@ -11,4 +12,5 @@ import com.project.servey.application.command.auth.SignUpCommand;
 public interface AuthUseCase {
     MemberResponseDto signUp(SignUpCommand signUpCommand);
     JwtResponseDto signInAndCreateJwt(SignInCommand signInCommand);
+    Long signOut(SignOutCommand signOutCommand);
 }
