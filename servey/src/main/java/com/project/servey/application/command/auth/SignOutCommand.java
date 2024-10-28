@@ -1,5 +1,5 @@
 package com.project.servey.application.command.auth;
-import com.project.servey.adapter.in.web.dto.response.auth.SignOutRequestDto;
+import com.project.servey.adapter.in.web.dto.request.auth.SignOutRequestDto;
 
 import lombok.*;
 

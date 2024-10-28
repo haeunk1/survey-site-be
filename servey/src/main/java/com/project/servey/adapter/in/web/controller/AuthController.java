@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.servey.adapter.in.web.dto.api.ApiResponse;
 import com.project.servey.adapter.in.web.dto.request.auth.MemberSignUpRequestDto;
 import com.project.servey.adapter.in.web.dto.request.auth.SignInRequestDto;
+import com.project.servey.adapter.in.web.dto.request.auth.SignOutRequestDto;
 import com.project.servey.adapter.in.web.dto.response.auth.JwtResponseDto;
 import com.project.servey.adapter.in.web.dto.response.auth.MemberResponseDto;
 import com.project.servey.application.command.auth.SignInCommand;
-import com.project.servey.adapter.in.web.dto.response.auth.MemberResponseDto;
+import com.project.servey.application.command.auth.SignOutCommand;
 import com.project.servey.application.command.auth.SignUpCommand;
 import com.project.servey.application.port.in.auth.AuthUseCase;
 

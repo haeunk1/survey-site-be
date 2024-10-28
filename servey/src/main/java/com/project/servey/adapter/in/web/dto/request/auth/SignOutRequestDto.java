@@ -1,4 +1,4 @@
-package com.project.servey.adapter.in.web.dto.response.auth;
+package com.project.servey.adapter.in.web.dto.request.auth;
 
 import lombok.*;
 
