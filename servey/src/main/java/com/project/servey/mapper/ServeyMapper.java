@@ -5,6 +5,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
+import com.project.servey.adapter.in.web.dto.response.servey.ServeyListResponseDto;
 import com.project.servey.adapter.in.web.dto.response.servey.ServeyResponseDto;
 import com.project.servey.adapter.out.persistence.entity.servey.ServeyEntity;
 import com.project.servey.application.command.servey.CreateServeyCommand;
@@ -32,6 +33,8 @@ public interface ServeyMapper {
     List<Servey> entitiesToDomains(List<ServeyEntity> serveyEntities);
 
     List<ServeyResponseDto> domainsToResponseDtos(List<Servey> serveys);
+
+    List<ServeyListResponseDto> domainsToListResponseDtos(List<Servey> servyes);
 
     //Servey commandToDomain(UpdateServeyCommand command);
 

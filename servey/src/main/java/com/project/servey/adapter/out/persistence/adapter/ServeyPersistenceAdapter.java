@@ -5,6 +5,7 @@ import java.util.List;
 import com.project.servey.adapter.out.persistence.entity.servey.ServeyEntity;
 import com.project.servey.adapter.out.persistence.repository.ServeyRepository;
 import com.project.servey.adapter.out.persistence.repository.dsl.ServeyDslRepository;
+import com.project.servey.application.command.servey.FindServeyListCommand;
 import com.project.servey.application.port.out.servey.CreateServeyPort;
 import com.project.servey.application.port.out.servey.DeleteServeyPort;
 import com.project.servey.application.port.out.servey.FindServeyPort;
@@ -33,7 +34,7 @@ public class ServeyPersistenceAdapter implements CreateServeyPort, FindServeyPor
 
     
     @Override
-    public List<Servey> findServeyList(){
+    public List<Servey> findServeyAllList(){
         List<ServeyEntity> list = serveyRepository.findAll();
         return serveyMapper.entitiesToDomains(list);
     }
@@ -63,6 +64,13 @@ public class ServeyPersistenceAdapter implements CreateServeyPort, FindServeyPor
     @Override
     public Long updateServey(Servey servey) {
         return dslRepository.updateServey(servey);
+    }
+
+
+    @Override
+    public List<Servey> findServeyFilteredList(FindServeyListCommand command) {
+        //command로 넘기기..
+        return dslRepository.selectServeyFilteredList(command);
     }
     
 }

@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.servey.adapter.in.web.dto.response.servey.ServeyListResponseDto;
 import com.project.servey.adapter.in.web.dto.response.servey.ServeyResponseDto;
 import com.project.servey.application.command.servey.FindServeyCommand;
+import com.project.servey.application.command.servey.FindServeyListCommand;
 import com.project.servey.application.port.in.servey.FindServeyUseCase;
 import com.project.servey.application.port.out.servey.FindServeyPort;
 import com.project.servey.domain.Servey;
@@ -28,8 +30,19 @@ public class FindServeyService implements FindServeyUseCase {
     }
 
     @Override
-    public List<ServeyResponseDto> findServeyList() {
-        List<Servey> list = findServeyPort.findServeyList();
+    public List<ServeyResponseDto> findServeyAllList() {
+        List<Servey> list = findServeyPort.findServeyAllList();
         return serveyMapper.domainsToResponseDtos(list);
+    }
+
+    /**
+     * @param findServeyListCommand 리스트 필터링 도메인
+     * @return 필터링된 설문조사 리스트
+     * @apiNote 필터링된 설문조사 리스트 return
+     */
+    @Override
+    public List<ServeyListResponseDto> findServeyFilteredList(FindServeyListCommand findServeyListCommand) {
+        List<Servey> list = findServeyPort.findServeyFilteredList(findServeyListCommand);
+        return serveyMapper.domainsToListResponseDtos(list);
     }
 }

@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.servey.adapter.in.web.dto.request.servey.ServeyListRequestDto;
+import com.project.servey.adapter.in.web.dto.response.servey.ServeyListResponseDto;
 import com.project.servey.adapter.in.web.dto.response.servey.ServeyResponseDto;
 
 import com.project.servey.application.command.servey.CreateServeyCommand;
 import com.project.servey.application.command.servey.FindServeyCommand;
+import com.project.servey.application.command.servey.FindServeyListCommand;
 import com.project.servey.application.command.servey.UpdateServeyCommand;
 import com.project.servey.application.port.in.servey.CreateServeyUseCase;
 import com.project.servey.application.port.in.servey.DeleteServeyUseCase;
@@ -44,9 +47,22 @@ public class ServeyController {
         return ResponseEntity.ok(responseDto);
     }
 
+    
     @GetMapping("/list")
-    public ResponseEntity<List<ServeyResponseDto>> findServeyList(){
-        List<ServeyResponseDto> list = findServeyUseCase.findServeyList();
+    public ResponseEntity<List<ServeyResponseDto>> findServeyAllList(){
+        List<ServeyResponseDto> list = findServeyUseCase.findServeyAllList();
+        return ResponseEntity.ok(list);
+    }
+
+    /**
+     * @param serveyListRequestDto 리스트 필터링 Dto
+     * @return 필터링된 리스트
+     * @apiNote 제목,정렬조건에 따른 리스트를 리턴합니다.
+     */
+    @GetMapping("/list")
+    public ResponseEntity<List<ServeyListResponseDto>> findServeyFilteredList(@RequestBody ServeyListRequestDto serveyListRequestDto){
+        FindServeyListCommand command = FindServeyListCommand.of(serveyListRequestDto);
+        List<ServeyListResponseDto> list = findServeyUseCase.findServeyFilteredList(command);
         return ResponseEntity.ok(list);
     }
 

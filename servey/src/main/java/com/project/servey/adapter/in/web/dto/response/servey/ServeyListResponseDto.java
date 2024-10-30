@@ -1,30 +1,23 @@
-package com.project.servey.domain;
+package com.project.servey.adapter.in.web.dto.response.servey;
+
 
 import java.time.LocalDateTime;
 
-import com.project.servey.adapter.out.persistence.entity.constant.ListOrderType;
 import com.project.servey.adapter.out.persistence.entity.constant.ServeyType;
 
 import lombok.*;
-
 @Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Servey {
-    private Long serveyId;
-    private int memberId;
+public class ServeyListResponseDto {
+    private Long memberId;
     private String title;
     private ServeyType type;
     private int perPoint;
     private int limitSubmit;
     private LocalDateTime startdate;
     private LocalDateTime enddate;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private String deleteYn;
-
-    private String name;
     private int questionCnt;
     //private int submitCnt; //추가예정
 }

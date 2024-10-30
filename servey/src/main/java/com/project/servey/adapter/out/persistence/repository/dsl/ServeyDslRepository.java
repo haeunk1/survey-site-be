@@ -2,14 +2,17 @@ package com.project.servey.adapter.out.persistence.repository.dsl;
 
 import org.springframework.stereotype.Repository;
 
+import com.project.servey.adapter.in.web.dto.request.servey.ServeyListRequestDto;
 import com.project.servey.adapter.out.persistence.entity.servey.ServeyEntity;
+import com.project.servey.application.command.servey.FindServeyListCommand;
 import com.project.servey.domain.Servey;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;
 import static com.project.servey.adapter.out.persistence.entity.servey.QServeyEntity.serveyEntity;
 
-import java.time.LocalDateTime;;
+import java.time.LocalDateTime;
+import java.util.List;;
 @RequiredArgsConstructor
 @Repository
 public class ServeyDslRepository {
@@ -42,4 +45,7 @@ public class ServeyDslRepository {
         .execute();
     }
    
+    public List<ServeyListResponseDto> selectServeyFilteredList(FindServeyListCommand command){
+        //return queryFactory.select()
+    }
 }
