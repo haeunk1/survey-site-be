@@ -32,9 +32,6 @@ public class ServeyEntity extends BaseEntity{
     @Column(name = "type", nullable = false)
     private ServeyType type;       // 설문조사유형
 
-    @Column(name = "category", nullable = false)
-    private int category;       // 카테고리
-
     @Column(name = "per_point", nullable = false)
     private int perPoint;       
 

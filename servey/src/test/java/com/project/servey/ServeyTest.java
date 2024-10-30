@@ -58,7 +58,6 @@ public class ServeyTest {
         // Servey servey = Servey.builder()
         //     .memberId("test1")
         //     .title("title1")
-        //     .category(1)
         //     .limitSubmit(1)
         //     .perPoint(10)
         //     .startdate(LocalDateTime.of(2024, 10, 10, 0, 0))

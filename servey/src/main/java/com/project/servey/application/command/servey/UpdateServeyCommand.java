@@ -14,7 +14,6 @@ public class UpdateServeyCommand {
     private Long serveyId;
     private String title;
     private ServeyType type;
-    private int category;
     private int perPoint;
     private int limitSubmit;
     private LocalDateTime startdate;
@@ -26,7 +25,6 @@ public class UpdateServeyCommand {
                 .serveyId(serveyResponseDto.getServeyId())
                 .title(serveyResponseDto.getTitle())
                 .type(serveyResponseDto.getType())
-                .category(serveyResponseDto.getCategory())
                 .perPoint(serveyResponseDto.getPerPoint())
                 .limitSubmit(serveyResponseDto.getLimitSubmit())
                 .startdate(serveyResponseDto.getStartdate())

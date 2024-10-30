@@ -13,7 +13,6 @@ public class CreateServeyCommand {
     private int memberId;
     private String title;
     private ServeyType type;
-    private int category;
     private int perPoint;
     private int limitSubmit;
     private LocalDateTime startdate;
@@ -26,7 +25,6 @@ public class CreateServeyCommand {
                 .memberId(serveyResponseDto.getMemberId())
                 .title(serveyResponseDto.getTitle())
                 .type(serveyResponseDto.getType())
-                .category(serveyResponseDto.getCategory())
                 .perPoint(serveyResponseDto.getPerPoint())
                 .limitSubmit(serveyResponseDto.getLimitSubmit())
                 .startdate(serveyResponseDto.getStartdate())

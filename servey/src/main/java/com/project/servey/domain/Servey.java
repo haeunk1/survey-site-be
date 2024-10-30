@@ -15,7 +15,6 @@ public class Servey {
     private int memberId;
     private String title;
     private ServeyType type;
-    private int category;
     private int perPoint;
     private int limitSubmit;
     private LocalDateTime startdate;

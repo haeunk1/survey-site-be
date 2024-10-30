@@ -33,7 +33,6 @@ public class ServeyDslRepository {
         return queryFactory.update(serveyEntity)
         .set(serveyEntity.title,servey.getTitle())
         .set(serveyEntity.type,servey.getType())
-        .set(serveyEntity.category,servey.getCategory())
         .set(serveyEntity.perPoint,servey.getPerPoint())
         .set(serveyEntity.limitSubmit,servey.getLimitSubmit())
         .set(serveyEntity.startdate,servey.getStartdate())
