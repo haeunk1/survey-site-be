@@ -2,6 +2,7 @@ package com.project.servey.adapter.out.persistence.adapter;
 
 import java.util.List;
 
+import com.project.servey.adapter.in.web.dto.response.servey.ServeyListResponseDto;
 import com.project.servey.adapter.out.persistence.entity.servey.ServeyEntity;
 import com.project.servey.adapter.out.persistence.repository.ServeyRepository;
 import com.project.servey.adapter.out.persistence.repository.dsl.ServeyDslRepository;
@@ -66,11 +67,10 @@ public class ServeyPersistenceAdapter implements CreateServeyPort, FindServeyPor
         return dslRepository.updateServey(servey);
     }
 
-
     @Override
-    public List<Servey> findServeyFilteredList(FindServeyListCommand command) {
-        //command로 넘기기..
-        return dslRepository.selectServeyFilteredList(command);
+    public List<ServeyListResponseDto> findServeyFilteredList(FindServeyListCommand command) {
+         //command로 넘기기..
+         return dslRepository.selectServeyFilteredList(command);
     }
     
 }

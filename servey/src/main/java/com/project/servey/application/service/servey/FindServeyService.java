@@ -42,7 +42,7 @@ public class FindServeyService implements FindServeyUseCase {
      */
     @Override
     public List<ServeyListResponseDto> findServeyFilteredList(FindServeyListCommand findServeyListCommand) {
-        List<Servey> list = findServeyPort.findServeyFilteredList(findServeyListCommand);
-        return serveyMapper.domainsToListResponseDtos(list);
+        List<ServeyListResponseDto> list = findServeyPort.findServeyFilteredList(findServeyListCommand);
+        return list;
     }
 }

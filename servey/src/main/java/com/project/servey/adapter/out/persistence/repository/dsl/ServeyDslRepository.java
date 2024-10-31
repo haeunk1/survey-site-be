@@ -3,13 +3,19 @@ package com.project.servey.adapter.out.persistence.repository.dsl;
 import org.springframework.stereotype.Repository;
 
 import com.project.servey.adapter.in.web.dto.request.servey.ServeyListRequestDto;
+import com.project.servey.adapter.in.web.dto.response.servey.ServeyListResponseDto;
+import com.project.servey.adapter.out.persistence.entity.constant.ListOrderType;
 import com.project.servey.adapter.out.persistence.entity.servey.ServeyEntity;
 import com.project.servey.application.command.servey.FindServeyListCommand;
 import com.project.servey.domain.Servey;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-
 import lombok.RequiredArgsConstructor;
 import static com.project.servey.adapter.out.persistence.entity.servey.QServeyEntity.serveyEntity;
+import static com.project.servey.adapter.out.persistence.entity.member.QMemberEntity.memberEntity;
+import static com.project.servey.adapter.out.persistence.entity.servey.QQuestionEntity.questionEntity;
+
 
 import java.time.LocalDateTime;
 import java.util.List;;
@@ -45,7 +51,43 @@ public class ServeyDslRepository {
         .execute();
     }
    
+    /*
+     * SELECT A.title,A.TYPE,A.per_point,A.limit_submit,A.startdate,A.enddate ,B.name ,C.CNT
+        FROM servey.servey AS A 
+        INNER JOIN servey.member AS B ON a.member_id = b.member_id
+        INNER JOIN (SELECT servey_id,COUNT(QUESTION_ID) AS CNT FROM SERVEY.QUESTION) AS C ON A.servey_id = c.servey_id
+        #INNER JOIN (SELECT question_id FROM serbey.answer) AS D ON d.
+        WHERE A.delete_yn = 'N' AND A.TITLE LIKE '%%'
+        ORDER BY A.per_point;
+     * 
+     */
     public List<ServeyListResponseDto> selectServeyFilteredList(FindServeyListCommand command){
-        //return queryFactory.select()
+        
+        return queryFactory
+            .select(Projections.constructor(ServeyListResponseDto.class,//프로젝션 매핑, 결과를 ServeyListResponseDto로 매핑
+                serveyEntity.title,
+                serveyEntity.type,
+                serveyEntity.perPoint,
+                serveyEntity.limitSubmit,
+                serveyEntity.startdate,
+                serveyEntity.enddate,
+                memberEntity.name,
+                // 서브쿼리로 question 수 카운트
+                JPAExpressions.select(questionEntity.count())
+                              .from(questionEntity)
+                              .where(questionEntity.serveyId.eq(serveyEntity.serveyId))
+            ))
+            .from(serveyEntity)
+            .join(memberEntity).on(serveyEntity.memberId.eq(memberEntity.memberId))
+            .where(
+                serveyEntity.deleteYn.eq("N"),
+                serveyEntity.title.containsIgnoreCase(command.getTitle())
+            )
+            .orderBy(serveyEntity.perPoint.asc())
+            .orderBy(command.getOrderType() == ListOrderType.POINT_DESC ? serveyEntity.perPoint.desc() : 
+                command.getOrderType() == ListOrderType.POINT_ASC ? serveyEntity.perPoint.asc() :
+                command.getOrderType() == ListOrderType.ENDDATE_DESC ? serveyEntity.enddate.desc() : serveyEntity.enddate.asc() 
+            )
+            .fetch();
     }
 }

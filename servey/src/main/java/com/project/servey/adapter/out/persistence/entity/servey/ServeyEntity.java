@@ -20,7 +20,7 @@ public class ServeyEntity extends BaseEntity{
     private Long serveyId;          // PK
 
     @Column(name = "member_id", nullable = false)
-    private int memberId;          // 작성자
+    private Long memberId;          // 작성자
 
     @Column(name = "title", nullable = false)
     private String title;           // 제목
