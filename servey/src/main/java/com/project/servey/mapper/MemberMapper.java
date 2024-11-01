@@ -19,7 +19,7 @@ public interface MemberMapper {
     MemberResponseDto domainToResponseDTO(Member member);
 
     // 도메인을 엔티티로 변환
-    MemberEntity toEntity(Member member);
+    MemberEntity domainToEntity(Member member);
 
     // 로그아웃 요청 DTO를 엔티티로 변환
     //Member toDomain(SignOutRequestDto logoutRequest);

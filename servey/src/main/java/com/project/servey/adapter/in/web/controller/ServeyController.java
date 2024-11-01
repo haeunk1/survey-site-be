@@ -48,7 +48,7 @@ public class ServeyController {
     }
 
     
-    @GetMapping("/list")
+    @GetMapping("/listAll")
     public ResponseEntity<List<ServeyResponseDto>> findServeyAllList(){
         List<ServeyResponseDto> list = findServeyUseCase.findServeyAllList();
         return ResponseEntity.ok(list);

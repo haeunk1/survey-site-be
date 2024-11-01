@@ -52,26 +52,25 @@ public class ServeyDslRepository {
     }
    
     /*
-     * SELECT A.title,A.TYPE,A.per_point,A.limit_submit,A.startdate,A.enddate ,B.name ,C.CNT
+     * SELECT A.title,A.TYPE,A.per_point,A.limit_submit,A.startdate,A.enddate ,B.name,
+        (SELECT COUNT(C.question_id) FROM servey.question AS C WHERE C.servey_id = A.servey_id) AS CNT
         FROM servey.servey AS A 
         INNER JOIN servey.member AS B ON a.member_id = b.member_id
-        INNER JOIN (SELECT servey_id,COUNT(QUESTION_ID) AS CNT FROM SERVEY.QUESTION) AS C ON A.servey_id = c.servey_id
-        #INNER JOIN (SELECT question_id FROM serbey.answer) AS D ON d.
-        WHERE A.delete_yn = 'N' AND A.TITLE LIKE '%%'
-        ORDER BY A.per_point;
+        WHERE A.delete_yn = 'N' AND A.TITLE LIKE '%testTitle%'
+        ORDER BY A.per_point desc;
      * 
      */
     public List<ServeyListResponseDto> selectServeyFilteredList(FindServeyListCommand command){
         
         return queryFactory
             .select(Projections.constructor(ServeyListResponseDto.class,//프로젝션 매핑, 결과를 ServeyListResponseDto로 매핑
+                memberEntity.name,    
                 serveyEntity.title,
                 serveyEntity.type,
                 serveyEntity.perPoint,
                 serveyEntity.limitSubmit,
                 serveyEntity.startdate,
                 serveyEntity.enddate,
-                memberEntity.name,
                 // 서브쿼리로 question 수 카운트
                 JPAExpressions.select(questionEntity.count())
                               .from(questionEntity)
@@ -83,7 +82,6 @@ public class ServeyDslRepository {
                 serveyEntity.deleteYn.eq("N"),
                 serveyEntity.title.containsIgnoreCase(command.getTitle())
             )
-            .orderBy(serveyEntity.perPoint.asc())
             .orderBy(command.getOrderType() == ListOrderType.POINT_DESC ? serveyEntity.perPoint.desc() : 
                 command.getOrderType() == ListOrderType.POINT_ASC ? serveyEntity.perPoint.asc() :
                 command.getOrderType() == ListOrderType.ENDDATE_DESC ? serveyEntity.enddate.desc() : serveyEntity.enddate.asc() 

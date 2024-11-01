@@ -37,11 +37,13 @@ public class Member {
 
 
     // factory method
-    public static Member of(Long memberId, String email, String name, String naLocalMetadataBuildingContext) {
+    public static Member of(Long memberId, String email, String name, String password) {
         return Member.builder()
                 .memberId(memberId)
                 .email(email)
                 .name(name)
+                .password(password)
+                .joinedDate(LocalDateTime.now())
                 .build();
     }
 

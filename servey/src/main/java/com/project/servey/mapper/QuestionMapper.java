@@ -19,5 +19,7 @@ public interface QuestionMapper {
     List<QuestionResponseDto> domainToResponseDto(List<Question> questionDomains);
 
     List<Question> entitiesToDomains(List<QuestionEntity> entitities);
+
+    QuestionEntity domaintoEntity(Question question);
     
 }

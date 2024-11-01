@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.project.servey.adapter.out.persistence.entity.servey.QuestionEntity;
 
-public interface QustionRepository extends JpaRepository<QuestionEntity,Long>{
+public interface QuestionRepository extends JpaRepository<QuestionEntity,Long>{
     
 }

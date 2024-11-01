@@ -15,4 +15,14 @@ public class Question {
     private String question;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public static Question of(Long questionId, Long serveyId, String question){
+        return builder()
+        .questionId(questionId)
+        .serveyId(serveyId)
+        .question(question)
+        .createdAt(LocalDateTime.now())
+        .updatedAt(null)
+        .build();
+    }
 }

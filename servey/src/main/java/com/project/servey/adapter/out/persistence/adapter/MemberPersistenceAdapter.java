@@ -25,7 +25,7 @@ public class MemberPersistenceAdapter implements CreateMemberPort, FindMemberPor
      */
     @Override
     public Member createMember(Member member) {
-        MemberEntity memberEntity = memberMapper.toEntity(member);
+        MemberEntity memberEntity = memberMapper.domainToEntity(member);
         MemberEntity savedMember = memberRepository.save(memberEntity);
         return memberMapper.toDomain(savedMember);
     }

@@ -62,7 +62,7 @@ public class RefreshTokenPersistenceAdapter implements CreateRefreshTokenPort, D
      */
     @Override
     public Boolean deleteRefreshToken(Member member) {
-        MemberEntity memberEntity = memberMapper.toEntity(member);
+        MemberEntity memberEntity = memberMapper.domainToEntity(member);
         validMemberEntity(memberEntity);
         // 회원의 RefreshToken 삭제
         refreshTokenRepository.deleteByMemberEntity(memberEntity);

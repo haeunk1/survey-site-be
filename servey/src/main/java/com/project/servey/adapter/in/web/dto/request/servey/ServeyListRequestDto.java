@@ -11,4 +11,11 @@ import lombok.*;
 public class ServeyListRequestDto {
     private String title;
     private ListOrderType orderType;
+
+    public static ServeyListRequestDto of(String title, ListOrderType orderType){
+        return builder()
+        .title(title)
+        .orderType(orderType)
+        .build();
+    }
 }

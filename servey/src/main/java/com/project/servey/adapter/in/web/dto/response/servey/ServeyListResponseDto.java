@@ -9,15 +9,16 @@ import lombok.*;
 @Builder
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class ServeyListResponseDto {
-    private Long memberId;
+    private String name;
     private String title;
     private ServeyType type;
     private int perPoint;
     private int limitSubmit;
     private LocalDateTime startdate;
     private LocalDateTime enddate;
-    private int questionCnt;
+    private Long questionCnt;
     //private int submitCnt; //추가예정
+    
 }

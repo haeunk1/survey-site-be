@@ -13,7 +13,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Servey {
     private Long serveyId;
-    private int memberId;
+    private Long memberId;
     private String title;
     private ServeyType type;
     private int perPoint;
@@ -27,4 +27,22 @@ public class Servey {
     private String name;
     private int questionCnt;
     //private int submitCnt; //추가예정
+
+    // factory method
+    public static Servey of(Long serveyId, Long memberId, String title, 
+    ServeyType type, int perPoint, int limitSubmit, 
+    LocalDateTime startdate, LocalDateTime enddate) {
+        return Servey.builder()
+                .memberId(memberId)
+                .title(title)
+                .type(type)
+                .perPoint(perPoint)
+                .limitSubmit(limitSubmit)
+                .startdate(startdate)
+                .enddate(enddate)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(null)
+                .deleteYn("N")
+                .build();
+    }
 }
