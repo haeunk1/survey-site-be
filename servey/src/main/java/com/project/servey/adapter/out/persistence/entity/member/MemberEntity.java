@@ -3,6 +3,7 @@ package com.project.servey.adapter.out.persistence.entity.member;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,6 +34,7 @@ public class MemberEntity {
     @Column(name = "name", nullable = false)
     private String name;           // 이름
 
+    @CreatedDate
     @CreationTimestamp
     @Column(name = "joined_date", nullable = false)
     private LocalDateTime joinedDate; // 가입일
