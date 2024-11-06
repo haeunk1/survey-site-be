@@ -6,7 +6,7 @@ import com.project.servey.exception.ServeyException;
 
 import lombok.*;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder
 @Getter
 public class FindServeyCommand {

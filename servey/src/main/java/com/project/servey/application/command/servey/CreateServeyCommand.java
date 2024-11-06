@@ -10,7 +10,7 @@ import com.project.servey.adapter.out.persistence.entity.constant.ServeyType;
 @Builder
 @Getter
 public class CreateServeyCommand {
-    private int memberId;
+    private Long memberId;
     private String title;
     private ServeyType type;
     private int perPoint;

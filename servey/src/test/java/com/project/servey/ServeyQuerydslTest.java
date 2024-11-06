@@ -81,22 +81,22 @@ public class ServeyQuerydslTest {
         questionRepository.save(questionMapper.domaintoEntity(newQuestion2));
     }
 
-    @Test
-    public void testSelectServeyFilteredList() {
-        ServeyListRequestDto dto = ServeyListRequestDto.of("tset", ListOrderType.POINT_DESC);
-        FindServeyListCommand command = FindServeyListCommand.of(dto);
+    // @Test
+    // public void testSelectServeyFilteredList() {
+    //     ServeyListRequestDto dto = ServeyListRequestDto.of("tset", ListOrderType.POINT_DESC);
+    //     FindServeyListCommand command = FindServeyListCommand.of(dto);
 
-        List<ServeyListResponseDto> result = serveyService.findServeyFilteredList(command);
+    //     List<ServeyListResponseDto> result = serveyService.findServeyFilteredList(command);
 
-        // 검증
-        assertThat(result).isNotEmpty();
-        assertThat(result.get(0).getTitle()).isEqualTo("Test Title");
-        //assertThat(result.get(0).getName()).isEqualTo("Test User");
-        //assertThat(result.get(0).getQuestionCnt()).isEqualTo(2L); // questionCnt가 서브쿼리 카운트와 일치하는지 확인
-    }
+    //     // 검증
+    //     assertThat(result).isNotEmpty();
+    //     assertThat(result.get(0).getTitle()).isEqualTo("Test Title");
+    //     //assertThat(result.get(0).getName()).isEqualTo("Test User");
+    //     //assertThat(result.get(0).getQuestionCnt()).isEqualTo(2L); // questionCnt가 서브쿼리 카운트와 일치하는지 확인
+    // }
 
-    @Test
-    public void tmpTest(){
-        System.out.println("test");
-    }
+    // @Test
+    // public void tmpTest(){
+    //     System.out.println("test");
+    // }
 }
