@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -22,7 +21,6 @@ import com.project.servey.application.port.in.servey.CreateServeyUseCase;
 import com.project.servey.application.port.in.servey.DeleteServeyUseCase;
 import com.project.servey.application.port.in.servey.FindServeyUseCase;
 import com.project.servey.application.port.in.servey.UpdateServeyUseCase;
-import com.project.servey.config.security.SecurityConfig;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,9 +44,12 @@ public class ServeyControllerTest {
     @MockBean DeleteServeyUseCase deleteServeyUseCase;
     @MockBean UpdateServeyUseCase updateServeyUseCase;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Test
     void testFindServey() throws Exception{
-        ServeyResponseDto serveyResponseDto = ServeyResponseDto.of(1L, 1L, "title1", ServeyType.OX, 10, 10, LocalDateTime.now(), LocalDateTime.now());
+        ServeyResponseDto serveyResponseDto = getTestDto();
 
         //given
         //테스트 과정에서 맡을 동작을 정의
@@ -70,29 +71,32 @@ public class ServeyControllerTest {
     @Test
     void testCreateServey() throws Exception{
         //Mock 객체에서 특정 메서드가 실행되는 경우 실제 Return을 줄 수 없기 때문에 가정 사항을 만들어줌
-        LocalDateTime customDateTime = LocalDateTime.of(2024, 11, 7, 14, 30, 45, 0);
 
-        ServeyResponseDto serveyResponseDto = ServeyResponseDto.of(1L, "title1", ServeyType.OX, 10, 10, customDateTime,customDateTime);
+        ServeyResponseDto serveyResponseDto = getTestDto();
+
         given(createServeyUseCase.createServey(any(CreateServeyCommand.class)))
         .willReturn(serveyResponseDto);
 
         //json 요청 바디 설정
-        String requestBody = new ObjectMapper().writeValueAsString(serveyResponseDto);
+        String requestBody = objectMapper.writeValueAsString(serveyResponseDto);
         
-        mockMvc.perform(
+        MvcResult result = mockMvc.perform(
             post("/servey/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody)
                 )
                 .andExpect(status().isOk())
-                .andDo(print());
+                .andExpect(jsonPath("$.title").exists())
+                .andExpect(jsonPath("$.memberId").exists())
+                .andDo(print())
+                .andReturn();
         
+                System.out.println(result.getResponse().getContentAsString());
 
     }
 
     @Test
     void testDeleteServey() {
-
     }
 
 
@@ -109,5 +113,9 @@ public class ServeyControllerTest {
     @Test
     void testUpdateServey() {
 
+    }
+
+    private ServeyResponseDto getTestDto(){
+        return ServeyResponseDto.of(1L, 1L, "title1", ServeyType.OX, 10, 10, LocalDateTime.now(), LocalDateTime.now());
     }
 }
