@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.servey.adapter.in.web.dto.api.ApiResponse;
 import com.project.servey.adapter.in.web.dto.request.question.QuestionRequestDto;
+import com.project.servey.adapter.in.web.dto.response.QuestionResponseDto;
 import com.project.servey.application.command.question.CreateQuestionCommand;
 import com.project.servey.application.port.in.question.CreateQuestionUseCase;
+import com.project.servey.application.port.in.question.FindQuestionUseCase;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +28,14 @@ import lombok.RequiredArgsConstructor;
 public class QuestionController {
 
     private final CreateQuestionUseCase createQuestionUseCase;
+    private final FindQuestionUseCase findQuestionUseCase;
     
+
+    /**
+     * @param serveyId,file 설문조사ID, 문항 리스트(파일)
+     * @return 업로드 성공메세지
+     * @apiNote 설문조사ID와 MultipartFile 형식으로 설문조사 문항 리스트 입력받아 저장.
+     */
     @PostMapping("/upload")
     @Transactional
     public ResponseEntity<ApiResponse<String>> uploadFile(
@@ -46,5 +56,17 @@ public class QuestionController {
         createQuestionUseCase.createQuestion(command);
         return ResponseEntity.ok(ApiResponse.success("파일 업로드 성공: " + fileName));
         
+    }
+
+    /**
+     * @param serveyId 설문조사
+     * @return 설문조사 문항리스트
+     * @apiNote 설문조사ID에 해당하는 문항 조회
+     */
+    @GetMapping("/list")
+    @Transactional
+    public ResponseEntity<List<QuestionResponseDto>> getQuestionList(@RequestParam(name="serveyId") Long id){
+        List<QuestionResponseDto> rtnList = findQuestionUseCase.findQuestionList(id);
+        return ResponseEntity.ok(rtnList);
     }
 }

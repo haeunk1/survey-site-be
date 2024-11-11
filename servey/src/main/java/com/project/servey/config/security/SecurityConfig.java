@@ -40,6 +40,7 @@ public class SecurityConfig{
                         .requestMatchers("/servey/{serveyId:[0-9]+}").permitAll()
                         .requestMatchers("/auth/signUp").permitAll()
                         .requestMatchers("/auth/signIn").permitAll()
+                        .requestMatchers("/question/list").permitAll()
                         .anyRequest().authenticated();                         // 나머지 요청은 인증 필요
                 });
                 //.authenticationProvider(authenticationProvider())                  // DaoAuthenticationProvider를 인증 제공자로 설정 (커스텀 로그인 인증)
