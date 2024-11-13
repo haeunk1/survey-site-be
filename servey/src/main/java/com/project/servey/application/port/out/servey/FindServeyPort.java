@@ -10,4 +10,5 @@ public interface FindServeyPort {
     Servey findServeyById(Long id);
     List<Servey> findServeyAllList();
     List<ServeyListResponseDto> findServeyFilteredList(FindServeyListCommand command);
+    boolean checkIsServeyExist(Long id);
 }

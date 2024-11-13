@@ -1,6 +1,7 @@
 package com.project.servey.adapter.out.persistence.adapter;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.project.servey.adapter.in.web.dto.response.servey.ServeyListResponseDto;
 import com.project.servey.adapter.out.persistence.entity.servey.ServeyEntity;
@@ -67,10 +68,23 @@ public class ServeyPersistenceAdapter implements CreateServeyPort, FindServeyPor
         return dslRepository.updateServey(servey);
     }
 
+    /*
+     * [Read] 필터링 조회
+    */
     @Override
     public List<ServeyListResponseDto> findServeyFilteredList(FindServeyListCommand command) {
          //command로 넘기기..
          return dslRepository.selectServeyFilteredList(command);
+    }
+
+    /*
+     * [Read] serveyId, deleteYn 으로 조회
+     * 조건에 해당하는 게시글 존재하면 true, 존재하지 않으면 false
+    */
+    @Override
+    public boolean checkIsServeyExist(Long id) {
+        Optional<ServeyEntity> serveyEntity = serveyRepository.findByServeyIdAndDeleteYn(id,"N");
+        return serveyEntity.isPresent();
     }
     
 }

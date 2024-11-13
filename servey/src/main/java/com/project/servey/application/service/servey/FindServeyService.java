@@ -11,6 +11,8 @@ import com.project.servey.application.command.servey.FindServeyListCommand;
 import com.project.servey.application.port.in.servey.FindServeyUseCase;
 import com.project.servey.application.port.out.servey.FindServeyPort;
 import com.project.servey.domain.Servey;
+import com.project.servey.exception.ErrorCode;
+import com.project.servey.exception.ServeyException;
 import com.project.servey.mapper.ServeyMapper;
 import com.project.servey.util.custom.UseCase;
 
@@ -25,6 +27,7 @@ public class FindServeyService implements FindServeyUseCase {
 
     @Override
     public ServeyResponseDto findServey(FindServeyCommand findCommand) {
+        checkIsServeyExist(findCommand.getServeyId());
         Servey findServey = findServeyPort.findServeyById(findCommand.getServeyId());
         return serveyMapper.domainToResponseDto(findServey);
     }
@@ -44,5 +47,17 @@ public class FindServeyService implements FindServeyUseCase {
     public List<ServeyListResponseDto> findServeyFilteredList(FindServeyListCommand findServeyListCommand) {
         List<ServeyListResponseDto> list = findServeyPort.findServeyFilteredList(findServeyListCommand);
         return list;
+    }
+
+    /**
+     * [READ] 삭제된 게시글이 아닌지 검증
+     * serveyId로 게시글이 존재하는지 검증하는 내부 메서드
+     */
+    public boolean checkIsServeyExist(Long serveyId) {
+        boolean isCommentExist = findServeyPort.checkIsServeyExist(serveyId);
+        if(!isCommentExist) {
+            throw new ServeyException(ErrorCode.SERVEY_NOT_FOUND);
+        }
+        return true;
     }
 }
