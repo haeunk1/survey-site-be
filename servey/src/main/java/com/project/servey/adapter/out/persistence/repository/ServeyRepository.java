@@ -8,4 +8,5 @@ import com.project.servey.adapter.out.persistence.entity.servey.ServeyEntity;
 
 public interface ServeyRepository extends JpaRepository<ServeyEntity,Long>{
     Optional<ServeyEntity> findByServeyIdAndDeleteYn(Long serveyId, String deleteYn);
+    Optional<ServeyEntity> findByServeyId(Long serveyId);
 }

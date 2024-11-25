@@ -25,9 +25,6 @@ public class ServeyEntity extends BaseEntity{
     @Column(name = "title", nullable = false)
     private String title;           // 제목
 
-    // @Column(name = "type", nullable = false)
-    // private int type;           // 설문조사유형
-
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     private ServeyType type;       // 설문조사유형
