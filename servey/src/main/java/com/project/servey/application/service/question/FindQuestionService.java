@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.servey.adapter.in.web.dto.response.QuestionResponseDto;
+import com.project.servey.adapter.in.web.dto.response.question.QuestionResponseDto;
 import com.project.servey.application.port.in.question.FindQuestionUseCase;
 import com.project.servey.application.port.out.question.FindQuestionPort;
 import com.project.servey.domain.Question;

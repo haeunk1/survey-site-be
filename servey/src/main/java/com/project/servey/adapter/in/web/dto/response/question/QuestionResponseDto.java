@@ -1,4 +1,4 @@
-package com.project.servey.adapter.in.web.dto.response;
+package com.project.servey.adapter.in.web.dto.response.question;
 
 import java.time.LocalDateTime;
 import lombok.AccessLevel;

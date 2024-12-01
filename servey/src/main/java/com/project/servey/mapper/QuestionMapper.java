@@ -5,7 +5,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-import com.project.servey.adapter.in.web.dto.response.QuestionResponseDto;
+import com.project.servey.adapter.in.web.dto.response.question.QuestionResponseDto;
 import com.project.servey.adapter.out.persistence.entity.servey.QuestionEntity;
 import com.project.servey.domain.Question;
 
