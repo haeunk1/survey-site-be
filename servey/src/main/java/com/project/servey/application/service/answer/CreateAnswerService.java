@@ -1,10 +1,18 @@
 package com.project.servey.application.service.answer;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.project.servey.application.command.anwer.CreateAnswerCommand;
 import com.project.servey.application.port.in.answer.CreateAnswerUseCase;
 import com.project.servey.application.port.out.answer.CreateAnswerPort;
 import com.project.servey.mapper.AnswerMapper;
+import com.project.servey.util.custom.UseCase;
 
+import lombok.RequiredArgsConstructor;
+
+@UseCase
+@RequiredArgsConstructor
+@Transactional(readOnly = false)
 public class CreateAnswerService implements CreateAnswerUseCase{
     //private final CreateAnswerPort createAnswerPort;
     //private final AnswerMapper mapper;

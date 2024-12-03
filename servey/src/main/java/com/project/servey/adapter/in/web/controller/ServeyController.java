@@ -59,7 +59,7 @@ public class ServeyController {
      * @return 필터링된 리스트
      * @apiNote 제목,정렬조건에 따른 리스트를 리턴합니다.
      */
-    @GetMapping("/list")
+    @PostMapping("/list")
     public ResponseEntity<List<ServeyListResponseDto>> findServeyFilteredList(@RequestBody ServeyListRequestDto serveyListRequestDto){
         FindServeyListCommand command = FindServeyListCommand.of(serveyListRequestDto);
         List<ServeyListResponseDto> list = findServeyUseCase.findServeyFilteredList(command);
