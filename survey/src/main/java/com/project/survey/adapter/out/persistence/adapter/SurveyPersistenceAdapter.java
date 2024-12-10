@@ -30,7 +30,7 @@ public class SurveyPersistenceAdapter implements CreateSurveyPort, FindSurveyPor
     @Override
     public Survey findSurveyById(Long id) {
         SurveyEntity surveyEntity = surveyRepository.findById(id)
-                    .orElseThrow(() -> new SurveyException(ErrorCode.Survey_NOT_FOUND));
+                    .orElseThrow(() -> new SurveyException(ErrorCode.SURVEY_NOT_FOUND));
         return surveyMapper.entityToDomain(surveyEntity);
     }
 

@@ -15,7 +15,7 @@ public class FindSurveyCommand {
     // factory method
     public static FindSurveyCommand of(Long surveyId) {
         if (surveyId == null) {
-            throw new SurveyException(ErrorCode.Survey_ID_IS_NULL);
+            throw new SurveyException(ErrorCode.SURVEY_ID_IS_NULL);
         }
 
         return FindSurveyCommand.builder()

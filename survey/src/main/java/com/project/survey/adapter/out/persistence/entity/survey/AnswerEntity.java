@@ -20,6 +20,9 @@ public class AnswerEntity {
     @Column(name = "answer_id") 
     private Long answerId;          // PK
 
+    @Column(name = "survey_id", nullable = false)
+    private Long surveyId;
+
     @Column(name = "question_id", nullable = false)
     private Long questionId;
 

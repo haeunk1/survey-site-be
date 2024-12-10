@@ -6,5 +6,7 @@ import com.project.survey.adapter.out.persistence.entity.member.MemberEntity;
 import com.project.survey.adapter.out.persistence.entity.survey.AnswerEntity;
 
 public interface AnswerRepository extends JpaRepository<AnswerEntity,Long>{
+
+    boolean existsByMemberIdAndSurveyId(Long memberId, Long surveyId);
     
 }

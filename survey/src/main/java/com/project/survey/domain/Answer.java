@@ -14,14 +14,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Answer {
     private Long answerId;
+    private Long surveyId;
     private Long questionId;
     private Long memberId;
     private String answer;
     private LocalDateTime submissionDate;
 
-    public static Answer of(Long answerId, Long questionId, Long memberId, String answer){
+    public static Answer of(Long answerId, Long surveyId, Long questionId, Long memberId, String answer){
         return builder()
         .answerId(answerId)
+        .surveyId(surveyId)
         .questionId(questionId)
         .memberId(memberId)
         .answer(answer)

@@ -10,6 +10,7 @@ import com.project.survey.application.command.survey.FindSurveyCommand;
 import com.project.survey.application.command.survey.FindSurveyListCommand;
 import com.project.survey.application.port.in.survey.FindSurveyUseCase;
 import com.project.survey.application.port.out.survey.FindSurveyPort;
+import com.project.survey.application.service.validation.SurveyValidationService;
 import com.project.survey.domain.Survey;
 import com.project.survey.exception.ErrorCode;
 import com.project.survey.exception.SurveyException;
@@ -24,10 +25,11 @@ import lombok.RequiredArgsConstructor;
 public class FindSurveyService implements FindSurveyUseCase {
     private final FindSurveyPort findSurveyPort;
     private final SurveyMapper surveyMapper;
+    private final SurveyValidationService validationService;
 
     @Override
     public SurveyResponseDto findSurvey(FindSurveyCommand findCommand) {
-        checkIsSurveyExist(findCommand.getSurveyId());
+        validationService.checkIsSurveyExist(findCommand.getSurveyId());
         Survey findSurvey = findSurveyPort.findSurveyById(findCommand.getSurveyId());
         return surveyMapper.domainToResponseDto(findSurvey);
     }
@@ -49,15 +51,5 @@ public class FindSurveyService implements FindSurveyUseCase {
         return list;
     }
 
-    /**
-     * [READ] 삭제된 게시글이 아닌지 검증
-     * surveyId로 게시글이 존재하는지 검증하는 내부 메서드
-     */
-    public boolean checkIsSurveyExist(Long surveyId) {
-        boolean isCommentExist = findSurveyPort.checkIsSurveyExist(surveyId);
-        if(!isCommentExist) {
-            throw new SurveyException(ErrorCode.Survey_NOT_FOUND);
-        }
-        return true;
-    }
+    
 }

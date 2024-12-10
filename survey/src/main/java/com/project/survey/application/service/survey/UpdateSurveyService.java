@@ -6,6 +6,7 @@ import com.project.survey.application.command.survey.UpdateSurveyCommand;
 import com.project.survey.application.port.in.survey.UpdateSurveyUseCase;
 import com.project.survey.application.port.out.survey.FindSurveyPort;
 import com.project.survey.application.port.out.survey.UpdateSurveyPort;
+import com.project.survey.application.service.validation.SurveyValidationService;
 import com.project.survey.domain.Survey;
 import com.project.survey.exception.ErrorCode;
 import com.project.survey.exception.SurveyException;
@@ -20,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class UpdateSurveyService implements UpdateSurveyUseCase{
     
     private final UpdateSurveyPort updateSurveyPort;
-    private final FindSurveyService findService;
+    private final SurveyValidationService validationService;
     private final SurveyMapper surveyMapper;
 
     @Override
@@ -28,7 +29,7 @@ public class UpdateSurveyService implements UpdateSurveyUseCase{
         Survey survey = surveyMapper.commandToDomain(command);
 
         //삭제된 게시글이 아닌지 검증
-        findService.checkIsSurveyExist(survey.getSurveyId());
+        validationService.checkIsSurveyExist(survey.getSurveyId());
         return updateSurveyPort.updateSurvey(survey);
     }
 }

@@ -22,6 +22,7 @@ import com.project.survey.adapter.out.persistence.entity.constant.SurveyType;
 import com.project.survey.application.command.survey.FindSurveyCommand;
 import com.project.survey.application.port.out.survey.FindSurveyPort;
 import com.project.survey.application.service.survey.FindSurveyService;
+import com.project.survey.application.service.validation.SurveyValidationService;
 import com.project.survey.domain.Survey;
 import com.project.survey.exception.ErrorCode;
 import com.project.survey.exception.SurveyException;
@@ -37,7 +38,7 @@ public class FindSurveyServiceTest {
     private SurveyMapper surveyMapper;
 
     @InjectMocks
-    private FindSurveyService service;
+    private SurveyValidationService service;
 
     // @Test
     // @DisplayName("[happy] 유효한 id로 설문조사 게시글 1개 조회")
@@ -77,7 +78,7 @@ public class FindSurveyServiceTest {
         assertThatThrownBy(() -> service.checkIsSurveyExist(savedSurveyId))
         .isInstanceOf(SurveyException.class)
         .hasMessageContaining("Survey not found")
-        .hasFieldOrPropertyWithValue("errorCode", ErrorCode.Survey_NOT_FOUND);
+        .hasFieldOrPropertyWithValue("errorCode", ErrorCode.SURVEY_NOT_FOUND);
     }
 
     @Test
