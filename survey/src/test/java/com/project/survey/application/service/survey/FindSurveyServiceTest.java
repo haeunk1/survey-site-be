@@ -92,7 +92,7 @@ public class FindSurveyServiceTest {
     }
     private Survey getTestDomain(){
         LocalDateTime data = LocalDateTime.of(2024,10,10,13,0,0,0);
-        return Survey.of(1L, 1L, "title1", SurveyType.OX, 10, 10,data,data);
+        return Survey.of(1L, 1L, "title1","description1", SurveyType.OX, 10, 10,data,data);
     }
     private SurveyResponseDto getTestDto(){
         LocalDateTime data = LocalDateTime.of(2024,10,10,13,0,0,0);

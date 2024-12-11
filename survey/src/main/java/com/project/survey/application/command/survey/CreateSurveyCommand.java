@@ -12,6 +12,7 @@ import com.project.survey.adapter.out.persistence.entity.constant.SurveyType;
 public class CreateSurveyCommand {
     private Long memberId;
     private String title;
+    private String description;
     private SurveyType type;
     private int perPoint;
     private int limitSubmit;
@@ -24,6 +25,7 @@ public class CreateSurveyCommand {
         return CreateSurveyCommand.builder()
                 .memberId(surveyResponseDto.getMemberId())
                 .title(surveyResponseDto.getTitle())
+                .description(surveyResponseDto.getDescription())
                 .type(surveyResponseDto.getType())
                 .perPoint(surveyResponseDto.getPerPoint())
                 .limitSubmit(surveyResponseDto.getLimitSubmit())

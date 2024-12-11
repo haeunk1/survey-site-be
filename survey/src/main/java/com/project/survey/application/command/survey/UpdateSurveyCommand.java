@@ -13,6 +13,7 @@ import lombok.*;
 public class UpdateSurveyCommand {
     private Long surveyId;
     private String title;
+    private String description;
     private SurveyType type;
     private int perPoint;
     private int limitSubmit;
@@ -24,6 +25,7 @@ public class UpdateSurveyCommand {
         return UpdateSurveyCommand.builder()
                 .surveyId(surveyResponseDto.getSurveyId())
                 .title(surveyResponseDto.getTitle())
+                .description(surveyResponseDto.getDescription())
                 .type(surveyResponseDto.getType())
                 .perPoint(surveyResponseDto.getPerPoint())
                 .limitSubmit(surveyResponseDto.getLimitSubmit())

@@ -70,7 +70,7 @@ public class SurveyQuerydslTest {
 
         //survey
         Long surveyId = 1L;
-        Survey newSurvey = Survey.of(surveyId,memberId,"test Title", SurveyType.OX, 10, 100,LocalDateTime.now(),LocalDateTime.now());
+        Survey newSurvey = Survey.of(surveyId,memberId,"test Title","test description", SurveyType.OX, 10, 100,LocalDateTime.now(),LocalDateTime.now());
         surveyRepository.save(surveyMapper.domainToEntity(newSurvey));
         
         Question newQuestion1 = Question.of(1L,surveyId, "Sample Question 1");

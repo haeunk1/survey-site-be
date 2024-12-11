@@ -16,6 +16,7 @@ public class SurveyResponseDto {
     private Long surveyId;
     private Long memberId;
     private String title;
+    private String description;
     private SurveyType type;
     private int perPoint;
     private int limitSubmit;
@@ -28,11 +29,12 @@ public class SurveyResponseDto {
     private LocalDateTime updatedAt;
     private String deleteYn;
 
-    public static SurveyResponseDto of(Long memberId, String title, SurveyType type
+    public static SurveyResponseDto of(Long memberId, String title, String description, SurveyType type
     , int perPoint, int limitSubmit, LocalDateTime startdate,LocalDateTime enddate){
         return builder()
         .memberId(memberId)
         .title(title)
+        .description(description)
         .perPoint(perPoint)
         .type(type)
         .limitSubmit(limitSubmit)

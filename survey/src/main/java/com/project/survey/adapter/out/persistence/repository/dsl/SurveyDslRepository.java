@@ -41,6 +41,7 @@ public class SurveyDslRepository {
     public Long updateSurvey(Survey survey){
         return queryFactory.update(surveyEntity)
         .set(surveyEntity.title,survey.getTitle())
+        .set(surveyEntity.description,survey.getDescription())
         .set(surveyEntity.type,survey.getType())
         .set(surveyEntity.perPoint,survey.getPerPoint())
         .set(surveyEntity.limitSubmit,survey.getLimitSubmit())
@@ -67,6 +68,7 @@ public class SurveyDslRepository {
                 surveyEntity.surveyId,    
                 memberEntity.name,    
                 surveyEntity.title,
+                surveyEntity.description,
                 surveyEntity.type,
                 surveyEntity.perPoint,
                 surveyEntity.limitSubmit,

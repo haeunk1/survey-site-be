@@ -15,6 +15,7 @@ public class Survey {
     private Long surveyId;
     private Long memberId;
     private String title;
+    private String description;
     private SurveyType type;
     private int perPoint;
     private int limitSubmit;
@@ -29,13 +30,14 @@ public class Survey {
     //private int submitCnt; //추가예정
 
     // factory method
-    public static Survey of(Long surveyId, Long memberId, String title, 
+    public static Survey of(Long surveyId, Long memberId, String title, String description,
     SurveyType type, int perPoint, int limitSubmit, 
     LocalDateTime startdate, LocalDateTime enddate) {
         return Survey.builder()
                 .memberId(memberId)
                 .title(title)
-                .type(type)
+                .title(title)
+                .description(description)
                 .perPoint(perPoint)
                 .limitSubmit(limitSubmit)
                 .startdate(startdate)

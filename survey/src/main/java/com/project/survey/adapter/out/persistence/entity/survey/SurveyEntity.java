@@ -25,6 +25,9 @@ public class SurveyEntity extends BaseEntity{
     @Column(name = "title", nullable = false)
     private String title;           // 제목
 
+    @Column(name = "description", nullable = false)
+    private String description;     // 설명
+
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     private SurveyType type;       // 설문조사유형

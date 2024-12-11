@@ -14,6 +14,7 @@ public class SurveyListResponseDto {
     private Long surveyId;
     private String name;
     private String title;
+    private String description;
     private SurveyType type;
     private int perPoint;
     private int limitSubmit;
