@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 /**
  * Spring Security 설정 클래스: 웹 보안 구성을 정의
@@ -37,7 +38,7 @@ public class SecurityConfig{
                     auth
                         .requestMatchers("/survey/listAll").permitAll()
                         .requestMatchers("/survey/list").permitAll()
-                        .requestMatchers("/survey/{surveyId:[0-9]+}").permitAll()
+                        .requestMatchers(new RegexRequestMatcher("^/survey/[0-9]+$",null)).permitAll()
                         .requestMatchers("/auth/signUp").permitAll()
                         .requestMatchers("/auth/signIn").permitAll()
                         .requestMatchers("/question/list").permitAll()
