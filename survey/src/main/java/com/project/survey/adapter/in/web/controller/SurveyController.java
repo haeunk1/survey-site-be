@@ -1,9 +1,11 @@
 package com.project.survey.adapter.in.web.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -86,5 +88,14 @@ public class SurveyController {
         UpdateSurveyCommand command = UpdateSurveyCommand.of(surveyResponseDto);
         Long rtn = updateSurveyUseCase.updateSurvey(command);
         return ResponseEntity.ok(rtn);
+    }
+
+    @Transactional
+    @GetMapping("/check/submit-status/{surveyId}")
+    public ResponseEntity<Map<String,Object>> checkSubmitStatus(
+        @PathVariable Long surveyId,
+        Authentication authentication
+    ){
+            return null;
     }
 }
