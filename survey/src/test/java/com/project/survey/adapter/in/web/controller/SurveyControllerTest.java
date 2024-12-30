@@ -117,6 +117,6 @@ public class SurveyControllerTest {
     }
 
     private SurveyResponseDto getTestDto(){
-        return SurveyResponseDto.of(1L, 1L, "title1", SurveyType.OX, 10, 10, LocalDateTime.now(), LocalDateTime.now());
+        return SurveyResponseDto.of(1L, 1L, "title1", SurveyType.OX, 10, 10, LocalDateTime.now(), LocalDateTime.now(),10*10);
     }
 }

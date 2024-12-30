@@ -27,21 +27,13 @@ public class CreateAnswerService implements CreateAnswerUseCase{
     @Override
     public int createAnswer(CreateAnswerCommand command) {
         //command (memberId,surveyId,answers)
+        validateCommand(command);
         
-        //1.surveyId 유효성 검사(존재여부)
-        surveyValidation.checkIsSurveyExist(command.getSurveyId());
         
-        //2.memberId 유효성 검사(존재여부,제출여부)..제출여부는 페이지 입장시 확인 필요
-        memberValidation.validateMember(command.getMemberId());
-        //memberValidation.checkAlreadySubmit(command.getMemberId(),command.getSurveyId());
-
-        //3.answer 각 답변에 대한 유효성검사(문항검증 : questionRepository.existsBySurveyIdAndQuestionId)
-        answerValidation.validationAnswer(command.getSurveyId(),command.getAnswers());
         
-        //4. 잔여 포인트 확인
 
         //4.동시성
-        //포인트 감소, 답변저장
+        //포인트 감소, 답변저장, 포인트 지급
 
     //         // 답변 저장
     //         AnswerEntity answerEntity = new AnswerEntity(
@@ -51,6 +43,21 @@ public class CreateAnswerService implements CreateAnswerUseCase{
     //         );
     //         answerRepository.save(answerEntity);
         return 0;
+    }
+
+    private void validateCommand(CreateAnswerCommand command){
+        //1.surveyId 유효성 검사(존재여부)
+        surveyValidation.checkIsSurveyExist(command.getSurveyId());
+                
+        //2.memberId 유효성 검사(존재여부,제출여부)..제출여부는 페이지 입장시 확인 필요
+        memberValidation.validateMember(command.getMemberId());
+        memberValidation.checkAlreadySubmit(command.getMemberId(),command.getSurveyId());
+
+        //3.answer 각 답변에 대한 유효성검사(문항검증 : questionRepository.existsBySurveyIdAndQuestionId)
+        answerValidation.validationAnswer(command.getSurveyId(),command.getAnswers());
+        
+        //4. 잔여 포인트 확인
+        surveyValidation.checkisRemainPoint(command.getSurveyId());
     }
     
 }

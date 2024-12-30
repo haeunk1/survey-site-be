@@ -20,6 +20,7 @@ public enum ErrorCode {
     // survey errors
     SURVEY_NOT_FOUND("SURVEY001", "Survey not found"),
     SURVEY_ID_IS_NULL("SURVEY002", "Survey ID is null"),
+    SURVEY_POINT_NOT_REMAIN("SURVEY003","Not enough points remaining"),
 
     //question errors
     FILE_UPLOAD_ERROR("FILE001", "File upload error"),

@@ -47,6 +47,9 @@ public class SurveyEntity extends BaseEntity{
     @Column(name = "delete_yn", nullable = false)
     private String deleteYn;
 
+    @Column(name = "remaining_points", nullable = false)
+    private int remainingPoints; // 남은 포인트
+
     //ID로 SurveyEntity 객체를 생성하는 정적 팩토리 메서드
     public static SurveyEntity of(Long surveyId){
         return SurveyEntity.builder()

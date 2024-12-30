@@ -28,6 +28,7 @@ public class SurveyResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String deleteYn;
+    private int remainingPoints;
 
     public static SurveyResponseDto of(Long memberId, String title, String description, SurveyType type
     , int perPoint, int limitSubmit, LocalDateTime startdate,LocalDateTime enddate){
@@ -46,7 +47,7 @@ public class SurveyResponseDto {
     }
 
     public static SurveyResponseDto of(Long surveyId, Long memberId, String title, SurveyType type
-    , int perPoint, int limitSubmit, LocalDateTime startdate,LocalDateTime enddate){
+    , int perPoint, int limitSubmit, LocalDateTime startdate,LocalDateTime enddate, int remainingPoints){
         return builder()
         .surveyId(surveyId)
         .memberId(memberId)
@@ -58,6 +59,7 @@ public class SurveyResponseDto {
         .enddate(enddate)
         .createdAt(LocalDateTime.now())
         .deleteYn("N")
+        .remainingPoints(remainingPoints)
         .build();
     }
 }

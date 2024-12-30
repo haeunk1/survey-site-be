@@ -19,6 +19,7 @@ public class CreateSurveyCommand {
     private LocalDateTime startdate;
     private LocalDateTime enddate;
     private String deleteYn;
+    private int remainingPoints;
     
     // factory method
     public static CreateSurveyCommand of(SurveyResponseDto surveyResponseDto) {
@@ -32,6 +33,7 @@ public class CreateSurveyCommand {
                 .startdate(surveyResponseDto.getStartdate())
                 .enddate(surveyResponseDto.getEnddate())
                 .deleteYn(surveyResponseDto.getDeleteYn())
+                .remainingPoints(surveyResponseDto.getPerPoint() * surveyResponseDto.getLimitSubmit())
                 .build();
     }
 }

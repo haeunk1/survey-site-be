@@ -24,6 +24,7 @@ public class Survey {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String deleteYn;
+    private int remainingPoints;
 
     private String name;
     private int questionCnt;
@@ -31,7 +32,7 @@ public class Survey {
 
     // factory method
     public static Survey of(Long surveyId, Long memberId, String title, String description,
-    SurveyType type, int perPoint, int limitSubmit, 
+    SurveyType type, int perPoint, int limitSubmit, int remainingPoints,
     LocalDateTime startdate, LocalDateTime enddate) {
         return Survey.builder()
                 .memberId(memberId)
@@ -45,6 +46,7 @@ public class Survey {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(null)
                 .deleteYn("N")
+                .remainingPoints(remainingPoints)
                 .build();
     }
 }

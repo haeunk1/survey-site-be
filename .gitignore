@@ -5,3 +5,4 @@
 /.vs
 *.log
 /servey
+/survey/src/main/resources/application.properties
