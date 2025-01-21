@@ -38,7 +38,7 @@ public class SecurityConfig{
                     auth
                         .requestMatchers("/survey/listAll").permitAll()
                         .requestMatchers("/survey/list").permitAll()
-                        .requestMatchers(new RegexRequestMatcher("^/survey/[0-9]+$",null)).permitAll()
+                        .requestMatchers(new RegexRequestMatcher("/survey/[0-9]+$",null)).permitAll()
                         .requestMatchers("/auth/signUp").permitAll()
                         .requestMatchers("/auth/signIn").permitAll()
                         .requestMatchers("/question/list").permitAll()

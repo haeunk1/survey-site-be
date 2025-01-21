@@ -1,5 +1,6 @@
 package com.project.survey.adapter.in.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -92,10 +93,11 @@ public class SurveyController {
 
     @Transactional
     @GetMapping("/check/submit-status/{surveyId}")
-    public ResponseEntity<Map<String,Object>> checkSubmitStatus(
-        @PathVariable Long surveyId,
-        Authentication authentication
+    public ResponseEntity<Map<String,String>> checkSubmitStatus(
+        @PathVariable Long surveyId//,Authentication authentication
     ){
-            return null;
+        Map testMap = new HashMap<>();
+        testMap.put("result","test");
+            return ResponseEntity.ok(testMap);
     }
 }
