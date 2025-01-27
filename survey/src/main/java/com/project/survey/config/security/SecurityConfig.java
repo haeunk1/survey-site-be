@@ -45,7 +45,7 @@ public class SecurityConfig{
                         .anyRequest().authenticated();                         // 나머지 요청은 인증 필요
                 });
                 //.authenticationProvider(authenticationProvider())                  // DaoAuthenticationProvider를 인증 제공자로 설정 (커스텀 로그인 인증)
-                //.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class); // JWT 토큰 필터 추가 (UsernamePasswordAuthenticationFilter 앞에 위치)
+                //.addFilterBefore(JwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class); // JWT 토큰 필터 추가 (UsernamePasswordAuthenticationFilter 앞에 위치)
 
         return http.build();
     }

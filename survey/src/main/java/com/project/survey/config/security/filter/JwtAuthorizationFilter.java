@@ -9,16 +9,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.project.survey.config.security.jwt.JwtTokenProvider;
 import com.project.survey.config.security.user.UserDetailsImpl;
-import com.project.survey.util.JwtTokenProvider;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
-@Component
-public class JwtTokenFilter extends OncePerRequestFilter{
+@RequiredArgsConstructor
+public class JwtAuthorizationFilter extends OncePerRequestFilter{
+
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

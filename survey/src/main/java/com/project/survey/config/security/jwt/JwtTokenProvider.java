@@ -1,4 +1,4 @@
-package com.project.survey.util;
+package com.project.survey.config.security.jwt;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,23 +22,25 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class JwtTokenProvider {
     @Value("${jwt.jwtSecret}")
-    private String jwtSecret;
-
+    private static String jwtSecretKey;
+    
     @Value("${jwt.jwtExpirationMs}")
-    private int jwtExpirationMs;
-    private SecretKey secretKey;
+        private int jwtExpirationMs;
+
+    private static SecretKey secretKey;
     /**
      * 객체 초기화 메서드, JWT 비밀 키를 설정
      */
     @PostConstruct
     public void init() {
-        byte[] keyBytes = jwtSecret.getBytes(StandardCharsets.UTF_8);
+        // jwtSecretKey를 바이트 배열로 변환하고, 이를 사용하여 HMAC-SHA256 알고리즘에 사용할 키를 생성한다.
+        byte[] keyBytes = jwtSecretKey.getBytes(StandardCharsets.UTF_8);
+        
         if (keyBytes.length < 32) {
             throw new IllegalArgumentException("The key length should be at least 32 bytes");
         }
-        this.secretKey = Keys.hmacShaKeyFor(keyBytes); // Secret Key 생성
+        secretKey = Keys.hmacShaKeyFor(keyBytes); // Secret Key 생성
     }
-
 
     /**
      * @param email    사용자 이메일
@@ -59,5 +63,30 @@ public class JwtTokenProvider {
                 .signWith(secretKey)
                 .compact();
     }
+
+    public String resolveToken(HttpServletRequest request){
+        return request.getHeader("X-AUTH-TOKEN");
+    }
+
+    /*
+    * 토큰 정보를 기반으로 Claims 정보를 반환
+    * @return Claims : Claims
+    */
+    // public static Claims getClainsFromToken(String token){
+    
+    //     return Jwts.parserBuilder()
+    //         .setSigningKey(secretKey) // Key 객체 사용
+    //         .build()
+    //         .parseClaimsJws(token)
+    //         .getBody();
+    // }
+
+    // Jwt Token의 유효성 및 만료 기간 검사
+    // public boolean validateToken(String jwtToken){
+    //     try{
+    //         Jwt<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
+
+    //     }
+    // }
 
 }
