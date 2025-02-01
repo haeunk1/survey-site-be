@@ -93,11 +93,12 @@ public class SurveyController {
 
     @Transactional
     @GetMapping("/check/submit-status/{surveyId}")
-    public ResponseEntity<Map<String,String>> checkSubmitStatus(
+    public ResponseEntity<String> checkSubmitStatus(
         @PathVariable Long surveyId//,Authentication authentication
     ){
-        Map testMap = new HashMap<>();
-        testMap.put("result","test");
-            return ResponseEntity.ok(testMap);
+        return ResponseEntity.ok("ok");
+        // Map testMap = new HashMap<>();
+        // testMap.put("result","test");
+        //     return ResponseEntity.ok(testMap);
     }
 }

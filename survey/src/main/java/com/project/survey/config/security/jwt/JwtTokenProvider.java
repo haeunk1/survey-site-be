@@ -2,17 +2,27 @@ package com.project.survey.config.security.jwt;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Enumeration;
 
 import javax.crypto.SecretKey;
 
 import org.springframework.stereotype.Component;
 
+import com.project.survey.config.security.user.CustomUserDetailsService;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
-
+import java.security.Key;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -20,14 +30,18 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class JwtTokenProvider {
     @Value("${jwt.jwtSecret}")
-    private static String jwtSecretKey;
+    private String jwtSecretKey;
     
     @Value("${jwt.jwtExpirationMs}")
-        private int jwtExpirationMs;
+    private int jwtExpirationMs;
 
-    private static SecretKey secretKey;
+    private SecretKey secretKey;
+
+    private final CustomUserDetailsService userDetailsService;
+
     /**
      * 객체 초기화 메서드, JWT 비밀 키를 설정
      */
@@ -64,29 +78,43 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    /**
+     * @param token
+     * @return Authentication
+     * @apiNote 인증 성공시 SecurityContextHolder에 저장할 Authentication 객체 생성
+     */
+    public Authentication getAuthentication(String token){
+        UserDetails userDetails = userDetailsService.loadUserByUsername(getUserEmail(token));
+        return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+    }
+    public String getUserEmail(String token){
+        return getClainsFromToken(token).getSubject();
+    }
+
+    // public String resolveToken(HttpServletRequest request){
+    //     return request.getHeader("Authorization");
+    // }
+    /*
+     * Authorization 헤더에서 'Bearer '를 제거하고 순수 access token만 추출
+     */
     public String resolveToken(HttpServletRequest request){
-        return request.getHeader("X-AUTH-TOKEN");
+        String bearerToken = request.getHeader("Authorization");
+        Enumeration<String> tmpToken = request.getHeaders("Authorization");
+        if(bearerToken != null && bearerToken.startsWith("Bearer "))
+            return bearerToken.substring(7);
+        else
+            return null;
     }
 
     /*
     * 토큰 정보를 기반으로 Claims 정보를 반환
     * @return Claims : Claims
     */
-    // public static Claims getClainsFromToken(String token){
-    
-    //     return Jwts.parserBuilder()
-    //         .setSigningKey(secretKey) // Key 객체 사용
-    //         .build()
-    //         .parseClaimsJws(token)
-    //         .getBody();
-    // }
-
-    // Jwt Token의 유효성 및 만료 기간 검사
-    // public boolean validateToken(String jwtToken){
-    //     try{
-    //         Jwt<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
-
-    //     }
-    // }
-
+    public Claims getClainsFromToken(String token){
+        return Jwts.parser()  
+            .setSigningKey(secretKey) 
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
+    }
 }

@@ -1,5 +1,8 @@
 package com.project.survey.config.security;
 import lombok.AllArgsConstructor;
+
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -11,8 +14,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
+import com.project.survey.config.security.filter.JwtAuthorizationFilter;
+import com.project.survey.config.security.jwt.JwtTokenProvider;
+import com.project.survey.config.security.jwt.JwtTokenValidator;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 /**
  * Spring Security 설정 클래스: 웹 보안 구성을 정의
  */
@@ -21,7 +32,28 @@ import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 @EnableMethodSecurity
 @AllArgsConstructor
 public class SecurityConfig{
+    
     private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final JwtTokenValidator jwtTokenValidator;
+    private final JwtTokenProvider jwtTokenProvider;
+
+    /*
+     * cors설정
+     */
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() { //Spring Security용 CORS 설정
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(Arrays.asList("http://localhost:8081"));
+        config.setAllowedHeaders(Arrays.asList("*"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.addExposedHeader("Authorization"); // Authorization 헤더 노출
+
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
     /**
      * @param http HttpSecurity 객체
      * @return SecurityFilterChain
@@ -30,8 +62,9 @@ public class SecurityConfig{
      * 필터 체인에서 JWT를 parsing하는 도중 예외가 발생하면 JwtEntryPoint가 호출되어 예외처리가 된다.
      */
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)                                 // CSRF 보호 비활성화
+    public SecurityFilterChain filterChain(HttpSecurity http,JwtAuthorizationFilter jwtAuthorizationFilter) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable)   
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))                              // CSRF 보호 비활성화
                 .exceptionHandling(e -> e.authenticationEntryPoint(authenticationEntryPoint)) // 인증 예외 처리 (custom 예외 처리: AuthenticationEntryPointImpl 클래스)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 상태 비저장 설정 (JWT 토큰 사용)
                 .authorizeHttpRequests(auth -> {
@@ -43,9 +76,8 @@ public class SecurityConfig{
                         .requestMatchers("/auth/signIn").permitAll()
                         .requestMatchers("/question/list").permitAll()
                         .anyRequest().authenticated();                         // 나머지 요청은 인증 필요
-                });
-                //.authenticationProvider(authenticationProvider())                  // DaoAuthenticationProvider를 인증 제공자로 설정 (커스텀 로그인 인증)
-                //.addFilterBefore(JwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class); // JWT 토큰 필터 추가 (UsernamePasswordAuthenticationFilter 앞에 위치)
+                })
+                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class); // JWT 토큰 필터 추가 (UsernamePasswordAuthenticationFilter 앞에 위치)
 
         return http.build();
     }
@@ -57,4 +89,10 @@ public class SecurityConfig{
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public JwtAuthorizationFilter jwtAuthorizationFilter() {
+        return new JwtAuthorizationFilter(jwtTokenProvider, jwtTokenValidator);
+    }
+
 }

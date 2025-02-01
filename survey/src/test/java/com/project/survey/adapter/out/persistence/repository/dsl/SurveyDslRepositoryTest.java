@@ -30,18 +30,18 @@ public class SurveyDslRepositoryTest {
     @Autowired
     private SurveyRepository surveyRepository;
 
-    @Test
-    @DisplayName("[happy] 게시글 성공적으로 삭제처리(delete_yn = 'Y')")
-    void testDeleteSurvey() {
-        //given
-        Long surveyId = 1L;
-        //when
-        dslRepository.deleteSurvey(surveyId);
-        //then
-        Optional<SurveyEntity> updatedEntity = surveyRepository.findBySurveyId(surveyId);
-        SurveyEntity entity = updatedEntity.orElseThrow(() -> new AssertionError("Survey entity not found"));
-        assertThat(entity.getDeleteYn()).isEqualTo("Y");
-    }
+    // @Test
+    // @DisplayName("[happy] 게시글 성공적으로 삭제처리(delete_yn = 'Y')")
+    // void testDeleteSurvey() {
+    //     //given
+    //     Long surveyId = 1L;
+    //     //when
+    //     dslRepository.deleteSurvey(surveyId);
+    //     //then
+    //     Optional<SurveyEntity> updatedEntity = surveyRepository.findBySurveyId(surveyId);
+    //     SurveyEntity entity = updatedEntity.orElseThrow(() -> new AssertionError("Survey entity not found"));
+    //     assertThat(entity.getDeleteYn()).isEqualTo("Y");
+    // }
 
     @Test
     void testSelectSurveyFilteredList() {

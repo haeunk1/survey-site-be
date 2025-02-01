@@ -16,6 +16,7 @@ import com.project.survey.application.port.out.member.CreateMemberPort;
 import com.project.survey.application.port.out.member.FindMemberPort;
 import com.project.survey.application.port.out.refreshToken.CreateRefreshTokenPort;
 import com.project.survey.application.port.out.refreshToken.DeleteRefreshTokenPort;
+import com.project.survey.config.security.jwt.JwtTokenProvider;
 import com.project.survey.config.security.user.UserDetailsImpl;
 import com.project.survey.domain.Jwt;
 import com.project.survey.domain.Member;
@@ -24,7 +25,7 @@ import com.project.survey.exception.ErrorCode;
 import com.project.survey.exception.SurveyException;
 import com.project.survey.mapper.JwtMapper;
 import com.project.survey.mapper.MemberMapper;
-import com.project.survey.util.JwtTokenProvider;
+
 import com.project.survey.util.custom.UseCase;
 
 import lombok.RequiredArgsConstructor;
