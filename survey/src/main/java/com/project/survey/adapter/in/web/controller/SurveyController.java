@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,16 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.survey.adapter.in.web.dto.request.survey.SurveyListRequestDto;
 import com.project.survey.adapter.in.web.dto.response.survey.SurveyListResponseDto;
 import com.project.survey.adapter.in.web.dto.response.survey.SurveyResponseDto;
-
+import com.project.survey.adapter.in.web.dto.response.survey.SurveySubmitStatusResponseDto;
 import com.project.survey.application.command.survey.CreateSurveyCommand;
 import com.project.survey.application.command.survey.FindSurveyCommand;
 import com.project.survey.application.command.survey.FindSurveyListCommand;
 import com.project.survey.application.command.survey.UpdateSurveyCommand;
+import com.project.survey.application.port.in.survey.CheckSurveyUseCase;
 import com.project.survey.application.port.in.survey.CreateSurveyUseCase;
 import com.project.survey.application.port.in.survey.DeleteSurveyUseCase;
 import com.project.survey.application.port.in.survey.FindSurveyUseCase;
 import com.project.survey.application.port.in.survey.UpdateSurveyUseCase;
+import com.project.survey.config.security.jwt.JwtTokenProvider;
 
+import io.jsonwebtoken.Claims;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -42,6 +46,7 @@ public class SurveyController {
     private final CreateSurveyUseCase createSurveyUseCase;
     private final DeleteSurveyUseCase deleteSurveyUseCase;
     private final UpdateSurveyUseCase updateSurveyUseCase;
+    private final CheckSurveyUseCase checkSurveyUseCase;
     
     @GetMapping("/{surveyId}")
     public ResponseEntity<SurveyResponseDto> findSurvey(@PathVariable("surveyId") Long id){
@@ -93,12 +98,10 @@ public class SurveyController {
 
     @Transactional
     @GetMapping("/check/submit-status/{surveyId}")
-    public ResponseEntity<String> checkSubmitStatus(
-        @PathVariable Long surveyId//,Authentication authentication
+    public ResponseEntity<SurveySubmitStatusResponseDto> checkSubmitStatus(
+        @PathVariable Long surveyId, @RequestHeader("Authorization") String token
     ){
-        return ResponseEntity.ok("ok");
-        // Map testMap = new HashMap<>();
-        // testMap.put("result","test");
-        //     return ResponseEntity.ok(testMap);
+        SurveySubmitStatusResponseDto response = checkSurveyUseCase.checkSubmitStatus(surveyId, token);
+        return ResponseEntity.ok(response);
     }
 }
