@@ -27,11 +27,19 @@ public class FindSurveyService implements FindSurveyUseCase {
     private final SurveyMapper surveyMapper;
     private final SurveyValidationService validationService;
 
+    //controller 사용
     @Override
     public SurveyResponseDto findSurvey(FindSurveyCommand findCommand) {
         validationService.checkIsSurveyExist(findCommand.getSurveyId());
         Survey findSurvey = findSurveyPort.findSurveyById(findCommand.getSurveyId());
         return surveyMapper.domainToResponseDto(findSurvey);
+    }
+
+    //service 사용
+    @Override
+    public Survey findSurveyDomain(Long surveyId) {
+        validationService.checkIsSurveyExist(surveyId);
+        return findSurveyPort.findSurveyById(surveyId);
     }
 
     @Override

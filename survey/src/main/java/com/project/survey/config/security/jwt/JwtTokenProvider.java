@@ -69,9 +69,9 @@ public class JwtTokenProvider {
 
         // JWT 토큰 생성
         return Jwts.builder()
-                .subject(email)
+                .subject(memberId.toString())
                 .claim("name", name)
-                .claim("memberId", memberId)
+                .claim("email", email)
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(secretKey)
@@ -84,16 +84,13 @@ public class JwtTokenProvider {
      * @apiNote 인증 성공시 SecurityContextHolder에 저장할 Authentication 객체 생성
      */
     public Authentication getAuthentication(String token){
-        UserDetails userDetails = userDetailsService.loadUserByUsername(getUserEmail(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(getMemberId(token));
         return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
     }
-    public String getUserEmail(String token){
+    public String getMemberId(String token){
         return getClainsFromToken(token).getSubject();
     }
 
-    // public String resolveToken(HttpServletRequest request){
-    //     return request.getHeader("Authorization");
-    // }
     /*
      * Authorization 헤더에서 'Bearer '를 제거하고 순수 access token만 추출
      */

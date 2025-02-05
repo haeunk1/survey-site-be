@@ -23,8 +23,8 @@ public class CustomUserDetailsService implements UserDetailsService{
     private final MemberRepository repository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        MemberEntity memberEntity = repository.findMemberEntityByEmail(email).orElseThrow(() -> new SurveyException(ErrorCode.MEMBER_NOT_FOUND));
+    public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
+        MemberEntity memberEntity = repository.findMemberEntityByMemberId(Long.valueOf(memberId)).orElseThrow(() -> new SurveyException(ErrorCode.MEMBER_NOT_FOUND));
         return CustomUserDetails.fromEntity(memberEntity);
     }
     

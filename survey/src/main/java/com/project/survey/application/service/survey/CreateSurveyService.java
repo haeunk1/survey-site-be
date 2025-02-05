@@ -19,18 +19,20 @@ public class CreateSurveyService implements CreateSurveyUseCase{
     private final CreateSurveyPort createSurveyPort;
     private final SurveyMapper surveyMapper;
 
-@Transactional
-@Override
-public SurveyResponseDto createSurvey(CreateSurveyCommand command) {
+
     /**
      * @param command 설문조사 생성 요청
      * @return 설문조사 생성 결과
      * @apiNote 설문조사 생성
      */
-    Survey survey = surveyMapper.commandToDomain(command);
-    Survey createdSurvey = createSurveyPort.createSurvey(survey);
+    @Transactional
+    @Override
+    public SurveyResponseDto createSurvey(CreateSurveyCommand command) {
+        
+        Survey survey = surveyMapper.commandToDomain(command);
+        Survey createdSurvey = createSurveyPort.createSurvey(survey);
 
-    return surveyMapper.domainToResponseDto(createdSurvey);
-}    
+        return surveyMapper.domainToResponseDto(createdSurvey);
+    }    
     
 }

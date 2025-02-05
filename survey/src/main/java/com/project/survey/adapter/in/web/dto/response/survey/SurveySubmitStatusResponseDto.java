@@ -12,4 +12,8 @@ import lombok.NoArgsConstructor;
 public class SurveySubmitStatusResponseDto {
     private SurveySubmitStatus status;
     private String message;       // 상태에 따른 상세 메시지
+
+    public static SurveySubmitStatusResponseDto of(SurveySubmitStatus status){
+        return new SurveySubmitStatusResponseDto(status,status.getMessage());
+    }
 }

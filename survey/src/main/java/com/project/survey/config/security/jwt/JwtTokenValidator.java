@@ -26,8 +26,8 @@ public class JwtTokenValidator {
      */
     public boolean isValidToken(String jwtToken){
         try{
-            String email = jwtTokenProvider.getUserEmail(jwtToken);
-            Member member = findMemberPort.findMemberByEmail(email);
+            Long memberId = Long.valueOf(jwtTokenProvider.getMemberId(jwtToken));
+            Member member = findMemberPort.findMemberById(memberId);
             return member != null;
         }catch(JwtException jwtException){
             log.debug("JWT validation error: {}", jwtException.getMessage());
