@@ -1,5 +1,7 @@
 package com.project.survey.adapter.out.persistence.adapter;
 
+import java.util.Optional;
+
 import com.project.survey.adapter.out.persistence.entity.member.MemberEntity;
 import com.project.survey.adapter.out.persistence.repository.MemberRepository;
 import com.project.survey.application.port.out.member.CreateMemberPort;
@@ -31,14 +33,11 @@ public class MemberPersistenceAdapter implements CreateMemberPort, FindMemberPor
     }
     @Override
     public Member findMemberById(Long memberId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findMemberById'");
+        MemberEntity memberEntity = memberRepository.findMemberEntityByMemberId(memberId)
+            .orElseThrow(() -> new SurveyException(ErrorCode.MEMBER_NOT_FOUND));
+        return memberMapper.toDomain(memberEntity);
     }
-    @Override
-    public Member findMember(Member member) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findMember'");
-    }
+
     /**
      * @param email 회원 이메일
      * @return 조회된 회원
